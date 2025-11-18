@@ -1,0 +1,376 @@
+Analysis & Synthesis report for uart
+Tue May 17 07:58:18 2005
+Version 4.2 Build 157 12/07/2004 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Multiplexer Restructuring Statistics (Restructuring Performed)
+  5. WYSIWYG Cells
+  6. General Register Statistics
+  7. Inverted Register Statistics
+  8. State Machine - |uart_test|uart:inst|uart_transmitter:u3|state
+  9. State Machine - |uart_test|uart:inst|uart_receiver:u2|state
+ 10. Hierarchy
+ 11. Analysis & Synthesis Resource Utilization by Entity
+ 12. Analysis & Synthesis Equations
+ 13. Analysis & Synthesis Source Files Read
+ 14. Analysis & Synthesis Resource Usage Summary
+ 15. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2004 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++-----------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                          ;
++-----------------------------+-----------------------------------------+
+; Analysis & Synthesis Status ; Successful - Tue May 17 07:58:18 2005   ;
+; Quartus II Version          ; 4.2 Build 157 12/07/2004 SJ Web Edition ;
+; Revision Name               ; uart                                    ;
+; Top-level Entity Name       ; uart_test                               ;
+; Family                      ; MAX II                                  ;
+; Total logic elements        ; 183                                     ;
+; Total pins                  ; 22                                      ;
+; Total virtual pins          ; 0                                       ;
+; UFM blocks                  ; 0                                       ;
++-----------------------------+-----------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                        ;
++--------------------------------------------------------------------+-----------------+---------------+
+; Option                                                             ; Setting         ; Default Value ;
++--------------------------------------------------------------------+-----------------+---------------+
+; Device                                                             ; EPM1270T144C5ES ;               ;
+; Family name                                                        ; MAX II          ; Stratix       ;
+; Top-level entity name                                              ; uart_test       ; uart          ;
+; Use smart compilation                                              ; Normal          ; Normal        ;
+; Restructure Multiplexers                                           ; Auto            ; Auto          ;
+; Create Debugging Nodes for IP Cores                                ; off             ; off           ;
+; Preserve fewer node names                                          ; On              ; On            ;
+; Disable OpenCore Plus hardware evaluation                          ; Off             ; Off           ;
+; Verilog Version                                                    ; Verilog_2001    ; Verilog_2001  ;
+; VHDL Version                                                       ; VHDL93          ; VHDL93        ;
+; State Machine Processing                                           ; Auto            ; Auto          ;
+; Extract Verilog State Machines                                     ; On              ; On            ;
+; Extract VHDL State Machines                                        ; On              ; On            ;
+; NOT Gate Push-Back                                                 ; On              ; On            ;
+; Power-Up Don't Care                                                ; On              ; On            ;
+; Remove Redundant Logic Cells                                       ; Off             ; Off           ;
+; Remove Duplicate Registers                                         ; On              ; On            ;
+; Ignore CARRY Buffers                                               ; Off             ; Off           ;
+; Ignore CASCADE Buffers                                             ; Off             ; Off           ;
+; Ignore GLOBAL Buffers                                              ; Off             ; Off           ;
+; Ignore ROW GLOBAL Buffers                                          ; Off             ; Off           ;
+; Ignore LCELL Buffers                                               ; Off             ; Off           ;
+; Ignore SOFT Buffers                                                ; On              ; On            ;
+; Limit AHDL Integers to 32 Bits                                     ; Off             ; Off           ;
+; Optimization Technique -- MAX II                                   ; Balanced        ; Balanced      ;
+; Carry Chain Length -- Stratix/Stratix GX/Cyclone/MAX II/Cyclone II ; 70              ; 70            ;
+; Auto Carry Chains                                                  ; On              ; On            ;
+; Auto Open-Drain Pins                                               ; On              ; On            ;
+; Remove Duplicate Logic                                             ; On              ; On            ;
+; Perform WYSIWYG Primitive Resynthesis                              ; Off             ; Off           ;
+; Perform gate-level register retiming                               ; Off             ; Off           ;
+; Allow register retiming to trade off Tsu/Tco with Fmax             ; On              ; On            ;
+; Allows Synchronous Control Signal Usage in Normal Mode Logic Cells ; On              ; On            ;
+; Auto RAM Block Balancing                                           ; On              ; On            ;
+; Auto Resource Sharing                                              ; Off             ; Off           ;
+; Enable M512 Memory Blocks                                          ; On              ; On            ;
++--------------------------------------------------------------------+-----------------+---------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------+
+; 2:1                ; 4 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |uart_test|uart:inst|br_gen:u1|cnt1[3]              ;
+; 2:1                ; 4 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |uart_test|uart:inst|uart_transmitter:u3|bct[3]     ;
+; 2:1                ; 4 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |uart_test|uart:inst|uart_receiver:u2|ct2[3]        ;
+; 2:1                ; 3 bits    ; 3 LEs         ; 3 LEs                ; 0 LEs                  ; Yes        ; |uart_test|uart:inst|uart_receiver:u2|ct1[0]        ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |uart_test|scan:inst6|bin[0]                        ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |uart_test|uart:inst|uart_transmitter:u3|tsr[2]     ;
+; 2:1                ; 2 bits    ; 2 LEs         ; 2 LEs                ; 0 LEs                  ; No         ; |uart_test|uart:inst|uart_transmitter:u3|txd_done~0 ;
+; 2:1                ; 3 bits    ; 3 LEs         ; 3 LEs                ; 0 LEs                  ; No         ; |uart_test|uart:inst|uart_receiver:u2|clr1~2        ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |uart_test|uart:inst|uart_receiver:u2|clr1~1        ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |uart_test|uart:inst|uart_receiver:u2|clr2~1        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------+
+
+
++----------------------------------------------------------------+
+; WYSIWYG Cells                                                  ;
++--------------------------------------------------------+-------+
+; Statistic                                              ; Value ;
++--------------------------------------------------------+-------+
+; Number of WYSIWYG cells                                ; 45    ;
+; Number of synthesis-generated cells                    ; 138   ;
+; Number of WYSIWYG LUTs                                 ; 45    ;
+; Number of synthesis-generated LUTs                     ; 88    ;
+; Number of WYSIWYG registers                            ; 32    ;
+; Number of synthesis-generated registers                ; 82    ;
+; Number of cells with combinational logic only          ; 69    ;
+; Number of cells with registers only                    ; 50    ;
+; Number of cells with combinational logic and registers ; 64    ;
++--------------------------------------------------------+-------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 114   ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 74    ;
+; Number of registers using Asynchronous Load  ; 8     ;
+; Number of registers using Clock Enable       ; 50    ;
+; Number of registers using Output Enable      ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; uart:inst|uart_transmitter:u3|tsr[0]    ; 2       ;
+; uart:inst|uart_transmitter:u3|tsr[1]    ; 1       ;
+; uart:inst|uart_transmitter:u3|tsr[2]    ; 1       ;
+; uart:inst|uart_receiver:u2|RDR[0]       ; 3       ;
+; uart:inst|uart_receiver:u2|RDR[5]       ; 3       ;
+; uart:inst|uart_receiver:u2|RDR[1]       ; 3       ;
+; uart:inst|uart_receiver:u2|RDR[3]       ; 3       ;
+; uart:inst|uart_transmitter:u3|tsr[3]    ; 1       ;
+; uart:inst|uart_transmitter:u3|tsr[4]    ; 1       ;
+; uart:inst|uart_transmitter:u3|tsr[5]    ; 1       ;
+; uart:inst|uart_transmitter:u3|tsr[6]    ; 1       ;
+; uart:inst|uart_transmitter:u3|tsr[7]    ; 1       ;
+; uart:inst|uart_transmitter:u3|tsr[8]    ; 2       ;
+; Total number of inverted registers = 13 ;         ;
++-----------------------------------------+---------+
+
+
++----------------------------------------------------------------+
+; State Machine - |uart_test|uart:inst|uart_transmitter:u3|state ;
++-------------+-------------+-------------+----------------------+
+; Name        ; state.tdata ; state.synch ; state.idle           ;
++-------------+-------------+-------------+----------------------+
+; state.idle  ; 0           ; 0           ; 0                    ;
+; state.synch ; 0           ; 1           ; 1                    ;
+; state.tdata ; 1           ; 0           ; 1                    ;
++-------------+-------------+-------------+----------------------+
+
+
++----------------------------------------------------------------------------+
+; State Machine - |uart_test|uart:inst|uart_receiver:u2|state                ;
++----------------------+-----------------+----------------------+------------+
+; Name                 ; state.recv_data ; state.start_detected ; state.idle ;
++----------------------+-----------------+----------------------+------------+
+; state.idle           ; 0               ; 0                    ; 0          ;
+; state.start_detected ; 0               ; 1                    ; 1          ;
+; state.recv_data      ; 1               ; 0                    ; 1          ;
++----------------------+-----------------+----------------------+------------+
+
+
++-----------+
+; Hierarchy ;
++-----------+
+uart_test
+ |-- uart:inst
+      |-- br_gen:u1
+           |-- lpm_counter:ctr2_rtl_0
+                |-- cntr_rm6:auto_generated
+      |-- uart_receiver:u2
+      |-- uart_transmitter:u3
+ |-- clk_div:inst1
+      |-- lpm_counter:cnt_rtl_1
+           |-- cntr_b67:auto_generated
+ |-- scan:inst6
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                           ;
++---------------------------------------+-------------+--------------+------------+------+--------------+--------------+-------------------+------------------+-----------------+-------------------------------------------------------------------------------+
+; Compilation Hierarchy Node            ; Logic Cells ; LC Registers ; UFM Blocks ; Pins ; Virtual Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Full Hierarchy Name                                                           ;
++---------------------------------------+-------------+--------------+------------+------+--------------+--------------+-------------------+------------------+-----------------+-------------------------------------------------------------------------------+
+; |uart_test                            ; 183 (0)     ; 114          ; 0          ; 22   ; 0            ; 69 (0)       ; 50 (0)            ; 64 (0)           ; 45 (0)          ; |uart_test                                                                    ;
+;    |clk_div:inst1|                    ; 32 (8)      ; 24           ; 0          ; 0    ; 0            ; 8 (8)        ; 0 (0)             ; 24 (0)           ; 24 (0)          ; |uart_test|clk_div:inst1                                                      ;
+;       |lpm_counter:cnt_rtl_1|         ; 24 (0)      ; 24           ; 0          ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 24 (0)           ; 24 (0)          ; |uart_test|clk_div:inst1|lpm_counter:cnt_rtl_1                                ;
+;          |cntr_b67:auto_generated|    ; 24 (24)     ; 24           ; 0          ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 24 (24)          ; 24 (24)         ; |uart_test|clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated        ;
+;    |scan:inst6|                       ; 37 (37)     ; 26           ; 0          ; 0    ; 0            ; 11 (11)      ; 18 (18)           ; 8 (8)            ; 0 (0)           ; |uart_test|scan:inst6                                                         ;
+;    |uart:inst|                        ; 114 (0)     ; 64           ; 0          ; 0    ; 0            ; 50 (0)       ; 32 (0)            ; 32 (0)           ; 21 (0)          ; |uart_test|uart:inst                                                          ;
+;       |br_gen:u1|                     ; 31 (23)     ; 17           ; 0          ; 0    ; 0            ; 14 (14)      ; 6 (6)             ; 11 (3)           ; 13 (5)          ; |uart_test|uart:inst|br_gen:u1                                                ;
+;          |lpm_counter:ctr2_rtl_0|     ; 8 (0)       ; 8            ; 0          ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 8 (0)            ; 8 (0)           ; |uart_test|uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0                         ;
+;             |cntr_rm6:auto_generated| ; 8 (8)       ; 8            ; 0          ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 8 (8)            ; 8 (8)           ; |uart_test|uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated ;
+;       |uart_receiver:u2|              ; 52 (52)     ; 28           ; 0          ; 0    ; 0            ; 24 (24)      ; 21 (21)           ; 7 (7)            ; 4 (4)           ; |uart_test|uart:inst|uart_receiver:u2                                         ;
+;       |uart_transmitter:u3|           ; 31 (31)     ; 19           ; 0          ; 0    ; 0            ; 12 (12)      ; 5 (5)             ; 14 (14)          ; 4 (4)           ; |uart_test|uart:inst|uart_transmitter:u3                                      ;
++---------------------------------------+-------------+--------------+------------+------+--------------+--------------+-------------------+------------------+-----------------+-------------------------------------------------------------------------------+
+
+
++--------------------------------+
+; Analysis & Synthesis Equations ;
++--------------------------------+
+The equations can be found in D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/uart.map.eqn.
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                        ;
++----------------------------------+-----------------+--------------------------------------------------------------------------+
+; File Name with User-Entered Path ; Used in Netlist ; File Name with Absolute Path                                             ;
++----------------------------------+-----------------+--------------------------------------------------------------------------+
+; br_gen.vhd                       ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/br_gen.vhd           ;
+; uart.vhd                         ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/uart.vhd             ;
+; uart_receiver.vhd                ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/uart_receiver.vhd    ;
+; uart_transmitter.vhd             ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/uart_transmitter.vhd ;
+; uart_test.bdf                    ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/uart_test.bdf        ;
+; clk_div.vhd                      ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/clk_div.vhd          ;
+; scan.vhd                         ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/scan.vhd             ;
+; lpm_counter.tdf                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.tdf              ;
+; lpm_constant.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_constant.inc             ;
+; lpm_decode.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.inc               ;
+; lpm_add_sub.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_add_sub.inc              ;
+; cmpconst.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/cmpconst.inc                 ;
+; lpm_compare.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_compare.inc              ;
+; lpm_counter.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.inc              ;
+; dffeea.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/dffeea.inc                   ;
+; alt_synch_counter.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter.inc        ;
+; alt_synch_counter_f.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter_f.inc      ;
+; alt_counter_f10ke.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_f10ke.inc        ;
+; alt_counter_stratix.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_stratix.inc      ;
+; aglobal42.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/aglobal42.inc                ;
+; db/cntr_rm6.tdf                  ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/db/cntr_rm6.tdf      ;
+; db/cntr_b67.tdf                  ; yes             ; D:/Brent/Project/GFEC_MAXII_Kit/program/RS232/RS232/db/cntr_b67.tdf      ;
++----------------------------------+-----------------+--------------------------------------------------------------------------+
+
+
++---------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary ;
++-----------------------------------+---------+
+; Resource                          ; Usage   ;
++-----------------------------------+---------+
+; Logic cells                       ; 183     ;
+; Total combinational functions     ; 133     ;
+; Total 4-input functions           ; 55      ;
+; Total 3-input functions           ; 20      ;
+; Total 2-input functions           ; 11      ;
+; Total 1-input functions           ; 47      ;
+; Total 0-input functions           ; 0       ;
+; Combinational cells for routing   ; 0       ;
+; Total registers                   ; 114     ;
+; Total logic cells in carry chains ; 45      ;
+; I/O pins                          ; 22      ;
+; Maximum fan-out node              ; clk     ;
+; Maximum fan-out                   ; 93      ;
+; Total fan-out                     ; 703     ;
+; Average fan-out                   ; 3.43    ;
++-----------------------------------+---------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 4.2 Build 157 12/07/2004 SJ Web Edition
+    Info: Processing started: Tue May 17 07:58:15 2005
+Info: Command: quartus_map --import_settings_files=on --export_settings_files=off uart -c uart
+Info: Found 2 design units, including 1 entities, in source file br_gen.vhd
+    Info: Found design unit 1: br_gen-arch
+    Info: Found entity 1: br_gen
+Info: Found 2 design units, including 1 entities, in source file uart.vhd
+    Info: Found design unit 1: uart-a
+    Info: Found entity 1: uart
+Info: Found 2 design units, including 1 entities, in source file uart_receiver.vhd
+    Info: Found design unit 1: uart_receiver-arch
+    Info: Found entity 1: uart_receiver
+Info: Found 2 design units, including 1 entities, in source file uart_transmitter.vhd
+    Info: Found design unit 1: uart_transmitter-arch
+    Info: Found entity 1: uart_transmitter
+Info: Found 1 design units, including 1 entities, in source file uart_test.bdf
+    Info: Found entity 1: uart_test
+Info: Found 2 design units, including 1 entities, in source file clk_div.vhd
+    Info: Found design unit 1: clk_div-a
+    Info: Found entity 1: clk_div
+Info: Found 2 design units, including 1 entities, in source file scan.vhd
+    Info: Found design unit 1: scan-arch
+    Info: Found entity 1: scan
+Warning: VHDL Signal Declaration warning at br_gen.vhd(17): ignored default value for signal "ctr2"
+Warning: VHDL Signal Declaration warning at br_gen.vhd(18): ignored default value for signal "ctr3"
+Warning: VHDL Process Statement warning at scan.vhd(27): signal "rst" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at scan.vhd(28): signal "rxd_data" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Warning: VHDL Process Statement warning at scan.vhd(29): signal "rxd_data" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Info: VHDL Case Statement information at scan.vhd(62): OTHERS choice is never selected
+Info: VHDL Case Statement information at scan.vhd(87): OTHERS choice is never selected
+Warning: VHDL Process Statement warning at clk_div.vhd(18): signal "reset" is read inside the Process Statement but isn't in the Process Statement's sensivitity list
+Info: State machine "|uart_test|uart:inst|uart_transmitter:u3|state" contains 3 states and 0 state bits
+Info: State machine "|uart_test|uart:inst|uart_receiver:u2|state" contains 3 states and 0 state bits
+Info: Selected Auto state machine encoding method for state machine "|uart_test|uart:inst|uart_transmitter:u3|state"
+Info: Encoding result for state machine "|uart_test|uart:inst|uart_transmitter:u3|state"
+    Info: Completed encoding using 3 state bits
+        Info: Encoded state bit "uart:inst|uart_transmitter:u3|state.tdata"
+        Info: Encoded state bit "uart:inst|uart_transmitter:u3|state.synch"
+        Info: Encoded state bit "uart:inst|uart_transmitter:u3|state.idle"
+    Info: State "|uart_test|uart:inst|uart_transmitter:u3|state.idle" uses code string "000"
+    Info: State "|uart_test|uart:inst|uart_transmitter:u3|state.synch" uses code string "011"
+    Info: State "|uart_test|uart:inst|uart_transmitter:u3|state.tdata" uses code string "101"
+Info: Selected Auto state machine encoding method for state machine "|uart_test|uart:inst|uart_receiver:u2|state"
+Info: Encoding result for state machine "|uart_test|uart:inst|uart_receiver:u2|state"
+    Info: Completed encoding using 3 state bits
+        Info: Encoded state bit "uart:inst|uart_receiver:u2|state.recv_data"
+        Info: Encoded state bit "uart:inst|uart_receiver:u2|state.start_detected"
+        Info: Encoded state bit "uart:inst|uart_receiver:u2|state.idle"
+    Info: State "|uart_test|uart:inst|uart_receiver:u2|state.idle" uses code string "000"
+    Info: State "|uart_test|uart:inst|uart_receiver:u2|state.start_detected" uses code string "011"
+    Info: State "|uart_test|uart:inst|uart_receiver:u2|state.recv_data" uses code string "101"
+Info: Inferred 2 megafunctions from design logic
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=8) from the following logic: "uart:inst|br_gen:u1|ctr2[0]~8"
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=24) from the following logic: "clk_div:inst1|cnt[0]~24"
+Info: Found 1 design units, including 1 entities, in source file c:/altera/quartus42/libraries/megafunctions/lpm_counter.tdf
+    Info: Found entity 1: lpm_counter
+Info: Found 1 design units, including 1 entities, in source file db/cntr_rm6.tdf
+    Info: Found entity 1: cntr_rm6
+Info: Found 1 design units, including 1 entities, in source file db/cntr_b67.tdf
+    Info: Found entity 1: cntr_b67
+Warning: Output pins are stuck at VCC or GND
+    Warning: Pin "seven_seg[7]" stuck at GND
+Info: Registers with preset signals will power-up high
+Info: Implemented 205 device resources after synthesis - the final resource count might be different
+    Info: Implemented 7 input pins
+    Info: Implemented 15 output pins
+    Info: Implemented 183 logic cells
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 8 warnings
+    Info: Processing ended: Tue May 17 07:58:18 2005
+    Info: Elapsed time: 00:00:03
+
+

@@ -1,0 +1,96 @@
+--------------------------------------------------------------------------------------
+Timing Analyzer Summary
+--------------------------------------------------------------------------------------
+
+Type           : Worst-case tsu
+Slack          : N/A
+Required Time  : None
+Actual Time    : 10.094 ns
+From           : sel[1]
+To             : uart:inst|uart_receiver:u2|ct2[2]
+From Clock     : 
+To Clock       : clk
+Failed Paths   : 0
+
+Type           : Worst-case tco
+Slack          : N/A
+Required Time  : None
+Actual Time    : 24.846 ns
+From           : uart:inst|br_gen:u1|ctr3[2]
+To             : txd_doneH
+From Clock     : clk
+To Clock       : 
+Failed Paths   : 0
+
+Type           : Worst-case th
+Slack          : N/A
+Required Time  : None
+Actual Time    : 4.238 ns
+From           : rst_n
+To             : scan:inst6|bin[2]
+From Clock     : 
+To Clock       : clk
+Failed Paths   : 0
+
+Type           : Clock Setup: 'clk'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 42.98 MHz ( period = 23.265 ns )
+From           : uart:inst|br_gen:u1|ctr3[2]
+To             : uart:inst|uart_transmitter:u3|bct[2]
+From Clock     : clk
+To Clock       : clk
+Failed Paths   : 0
+
+Type           : Clock Setup: 'sel[0]'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 179.82 MHz ( period = 5.561 ns )
+From           : uart:inst|br_gen:u1|ctr3[1]
+To             : uart:inst|br_gen:u1|ctr3[2]
+From Clock     : sel[0]
+To Clock       : sel[0]
+Failed Paths   : 0
+
+Type           : Clock Setup: 'sel[1]'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 180.05 MHz ( period = 5.554 ns )
+From           : uart:inst|br_gen:u1|ctr3[1]
+To             : uart:inst|br_gen:u1|ctr3[2]
+From Clock     : sel[1]
+To Clock       : sel[1]
+Failed Paths   : 0
+
+Type           : Clock Setup: 'sel[2]'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 197.47 MHz ( period = 5.064 ns )
+From           : uart:inst|br_gen:u1|ctr3[1]
+To             : uart:inst|br_gen:u1|ctr3[2]
+From Clock     : sel[2]
+To Clock       : sel[2]
+Failed Paths   : 0
+
+Type           : Clock Hold: 'clk'
+Slack          : Not operational: Clock Skew > Data Delay
+Required Time  : None
+Actual Time    : N/A
+From           : scan:inst6|min_ten[0]
+To             : scan:inst6|bin[0]
+From Clock     : clk
+To Clock       : clk
+Failed Paths   : 12
+
+Type           : Total number of failed paths
+Slack          : 
+Required Time  : 
+Actual Time    : 
+From           : 
+To             : 
+From Clock     : 
+To Clock       : 
+Failed Paths   : 12
+
+--------------------------------------------------------------------------------------
+

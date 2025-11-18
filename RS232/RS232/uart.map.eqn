@@ -1,0 +1,1584 @@
+--F1_rxd_readyH is uart:inst|uart_receiver:u2|rxd_readyH
+--operation mode is normal
+
+F1_rxd_readyH_lut_out = F1L03;
+F1_rxd_readyH = DFFEAS(F1_rxd_readyH_lut_out, clk, VCC, , rst_n, , , , );
+
+
+--G1_bct[2] is uart:inst|uart_transmitter:u3|bct[2]
+--operation mode is normal
+
+G1_bct[2]_lut_out = G1L5;
+G1_bct[2] = DFFEAS(G1_bct[2]_lut_out, clk, rst_n, , , , , , );
+
+
+--G1_bct[1] is uart:inst|uart_transmitter:u3|bct[1]
+--operation mode is normal
+
+G1_bct[1]_lut_out = G1L3;
+G1_bct[1] = DFFEAS(G1_bct[1]_lut_out, clk, rst_n, , , , , , );
+
+
+--G1_bct[3] is uart:inst|uart_transmitter:u3|bct[3]
+--operation mode is normal
+
+G1_bct[3]_lut_out = G1L7 & G1L71 # !G1L61 # !G1_state.tdata;
+G1_bct[3] = DFFEAS(G1_bct[3]_lut_out, clk, rst_n, , , , , , );
+
+
+--G1_bct[0] is uart:inst|uart_transmitter:u3|bct[0]
+--operation mode is normal
+
+G1_bct[0]_lut_out = G1L1 & G1L71 # !G1L61 # !G1_state.tdata;
+G1_bct[0] = DFFEAS(G1_bct[0]_lut_out, clk, rst_n, , , , , , );
+
+
+--G1L71 is uart:inst|uart_transmitter:u3|reduce_or~34
+--operation mode is normal
+
+G1L71 = G1_bct[2] # G1_bct[1] # !G1_bct[0] # !G1_bct[3];
+
+
+--G1_state.tdata is uart:inst|uart_transmitter:u3|state.tdata
+--operation mode is normal
+
+G1_state.tdata_lut_out = G1L61 & G1_state.synch # G1_state.tdata & G1L71 # !G1L61 & G1_state.tdata;
+G1_state.tdata = DFFEAS(G1_state.tdata_lut_out, clk, rst_n, , , , , , );
+
+
+--E1_ctr3[2] is uart:inst|br_gen:u1|ctr3[2]
+--operation mode is normal
+
+E1_ctr3[2]_lut_out = !E1_ctr3[2];
+E1_ctr3[2] = DFFEAS(E1_ctr3[2]_lut_out, E1L51, VCC, , E1L1, , , , );
+
+
+--G1_bclk_dlayed is uart:inst|uart_transmitter:u3|bclk_dlayed
+--operation mode is normal
+
+G1_bclk_dlayed_lut_out = E1_ctr3[2];
+G1_bclk_dlayed = DFFEAS(G1_bclk_dlayed_lut_out, clk, rst_n, , , , , , );
+
+
+--G1L61 is uart:inst|uart_transmitter:u3|nextstate.tdata~91
+--operation mode is normal
+
+G1L61 = E1_ctr3[2] & !G1_bclk_dlayed;
+
+
+--G1_tsr[0] is uart:inst|uart_transmitter:u3|tsr[0]
+--operation mode is normal
+
+G1_tsr[0]_lut_out = !G1L51 & G1L61 & G1_state.synch # !G1L23;
+G1_tsr[0] = DFFEAS(G1_tsr[0]_lut_out, clk, rst_n, , , , , , );
+
+
+--D1_com_mten is scan:inst6|com_mten
+--operation mode is normal
+
+D1_com_mten_lut_out = D1_sel[1] & D1_sel[0];
+D1_com_mten = DFFEAS(D1_com_mten_lut_out, K1_safe_q[13], rst_n, , , , , , );
+
+
+--D1_com_mone is scan:inst6|com_mone
+--operation mode is normal
+
+D1_com_mone_lut_out = D1_sel[1] & !D1_sel[0];
+D1_com_mone = DFFEAS(D1_com_mone_lut_out, K1_safe_q[13], rst_n, , , , , , );
+
+
+--D1_com_sten is scan:inst6|com_sten
+--operation mode is normal
+
+D1_com_sten_lut_out = D1_sel[0] & !D1_sel[1];
+D1_com_sten = DFFEAS(D1_com_sten_lut_out, K1_safe_q[13], rst_n, , , , , , );
+
+
+--D1_com_sone is scan:inst6|com_sone
+--operation mode is normal
+
+D1_com_sone_lut_out = !D1_sel[1] & !D1_sel[0];
+D1_com_sone = DFFEAS(D1_com_sone_lut_out, K1_safe_q[13], rst_n, , , , , , );
+
+
+--D1_bin[0] is scan:inst6|bin[0]
+--operation mode is normal
+
+D1_bin[0]_lut_out = D1_sel[0] & D1L32 & D1_min_ten[0] # !D1L32 & D1_sec_ten[0] # !D1_sel[0] & D1L32;
+D1_bin[0] = DFFEAS(D1_bin[0]_lut_out, K1_safe_q[13], VCC, , rst_n, , , , );
+
+
+--D1_bin[1] is scan:inst6|bin[1]
+--operation mode is normal
+
+D1_bin[1]_lut_out = D1_sel[1] & D1L22 & D1_min_ten[1] # !D1L22 & D1_min_one[1] # !D1_sel[1] & D1L22;
+D1_bin[1] = DFFEAS(D1_bin[1]_lut_out, K1_safe_q[13], VCC, , rst_n, , , , );
+
+
+--D1_bin[2] is scan:inst6|bin[2]
+--operation mode is normal
+
+D1_bin[2]_lut_out = D1_sel[0] & D1L12 & D1_min_ten[2] # !D1L12 & D1_sec_ten[2] # !D1_sel[0] & D1L12;
+D1_bin[2] = DFFEAS(D1_bin[2]_lut_out, K1_safe_q[13], VCC, , rst_n, , , , );
+
+
+--D1_bin[3] is scan:inst6|bin[3]
+--operation mode is normal
+
+D1_bin[3]_lut_out = D1_sel[1] & D1L02 & D1_min_ten[3] # !D1L02 & D1_min_one[3] # !D1_sel[1] & D1L02;
+D1_bin[3] = DFFEAS(D1_bin[3]_lut_out, K1_safe_q[13], VCC, , rst_n, , , , );
+
+
+--D1L34 is scan:inst6|seven_seg[6]~82
+--operation mode is normal
+
+D1L34 = D1_bin[0] & D1_bin[3] # D1_bin[1] $ D1_bin[2] # !D1_bin[0] & D1_bin[1] # D1_bin[2] $ D1_bin[3];
+
+
+--D1L24 is scan:inst6|seven_seg[5]~84
+--operation mode is normal
+
+D1L24 = D1_bin[0] & D1_bin[3] $ (D1_bin[1] # !D1_bin[2]) # !D1_bin[0] & D1_bin[1] & !D1_bin[2] & !D1_bin[3];
+
+
+--D1L14 is scan:inst6|seven_seg[4]~86
+--operation mode is normal
+
+D1L14 = D1_bin[1] & D1_bin[0] & !D1_bin[3] # !D1_bin[1] & D1_bin[2] & !D1_bin[3] # !D1_bin[2] & D1_bin[0];
+
+
+--D1L04 is scan:inst6|seven_seg[3]~88
+--operation mode is normal
+
+D1L04 = D1_bin[1] & D1_bin[0] & D1_bin[2] # !D1_bin[0] & !D1_bin[2] & D1_bin[3] # !D1_bin[1] & !D1_bin[3] & D1_bin[0] $ D1_bin[2];
+
+
+--D1L93 is scan:inst6|seven_seg[2]~90
+--operation mode is normal
+
+D1L93 = D1_bin[2] & D1_bin[3] & D1_bin[1] # !D1_bin[0] # !D1_bin[2] & !D1_bin[0] & D1_bin[1] & !D1_bin[3];
+
+
+--D1L83 is scan:inst6|seven_seg[1]~92
+--operation mode is normal
+
+D1L83 = D1_bin[1] & D1_bin[0] & D1_bin[3] # !D1_bin[0] & D1_bin[2] # !D1_bin[1] & D1_bin[2] & D1_bin[0] $ D1_bin[3];
+
+
+--D1L73 is scan:inst6|seven_seg[0]~94
+--operation mode is normal
+
+D1L73 = D1_bin[2] & !D1_bin[1] & D1_bin[0] $ !D1_bin[3] # !D1_bin[2] & D1_bin[0] & D1_bin[1] $ !D1_bin[3];
+
+
+--J1_safe_q[5] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[5]
+--operation mode is arithmetic
+
+J1_safe_q[5]_carry_eqn = J1L01;
+J1_safe_q[5]_lut_out = J1_safe_q[5] $ (J1_safe_q[5]_carry_eqn);
+J1_safe_q[5] = DFFEAS(J1_safe_q[5]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L21 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella5~COUT
+--operation mode is arithmetic
+
+J1L21 = CARRY(!J1L01 # !J1_safe_q[5]);
+
+
+--J1_safe_q[6] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[6]
+--operation mode is arithmetic
+
+J1_safe_q[6]_carry_eqn = J1L21;
+J1_safe_q[6]_lut_out = J1_safe_q[6] $ (!J1_safe_q[6]_carry_eqn);
+J1_safe_q[6] = DFFEAS(J1_safe_q[6]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L41 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella6~COUT
+--operation mode is arithmetic
+
+J1L41 = CARRY(J1_safe_q[6] & !J1L21);
+
+
+--J1_safe_q[4] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[4]
+--operation mode is arithmetic
+
+J1_safe_q[4]_carry_eqn = J1L8;
+J1_safe_q[4]_lut_out = J1_safe_q[4] $ (!J1_safe_q[4]_carry_eqn);
+J1_safe_q[4] = DFFEAS(J1_safe_q[4]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L01 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella4~COUT
+--operation mode is arithmetic
+
+J1L01 = CARRY(J1_safe_q[4] & !J1L8);
+
+
+--E1L31 is uart:inst|br_gen:u1|bclkx8~23
+--operation mode is normal
+
+E1L31 = sel[0] & sel[1] # !sel[0] & sel[1] & J1_safe_q[6] # !sel[1] & J1_safe_q[4];
+
+
+--J1_safe_q[7] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[7]
+--operation mode is normal
+
+J1_safe_q[7]_carry_eqn = J1L41;
+J1_safe_q[7]_lut_out = J1_safe_q[7] $ (J1_safe_q[7]_carry_eqn);
+J1_safe_q[7] = DFFEAS(J1_safe_q[7]_lut_out, E1_cnt2, VCC, , , , , , );
+
+
+--E1L41 is uart:inst|br_gen:u1|bclkx8~24
+--operation mode is normal
+
+E1L41 = sel[0] & E1L31 & J1_safe_q[7] # !E1L31 & J1_safe_q[5] # !sel[0] & E1L31;
+
+
+--J1_safe_q[2] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[2]
+--operation mode is arithmetic
+
+J1_safe_q[2]_carry_eqn = J1L4;
+J1_safe_q[2]_lut_out = J1_safe_q[2] $ (!J1_safe_q[2]_carry_eqn);
+J1_safe_q[2] = DFFEAS(J1_safe_q[2]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L6 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella2~COUT
+--operation mode is arithmetic
+
+J1L6 = CARRY(J1_safe_q[2] & !J1L4);
+
+
+--J1_safe_q[1] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[1]
+--operation mode is arithmetic
+
+J1_safe_q[1]_carry_eqn = J1L2;
+J1_safe_q[1]_lut_out = J1_safe_q[1] $ (J1_safe_q[1]_carry_eqn);
+J1_safe_q[1] = DFFEAS(J1_safe_q[1]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L4 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella1~COUT
+--operation mode is arithmetic
+
+J1L4 = CARRY(!J1L2 # !J1_safe_q[1]);
+
+
+--J1_safe_q[0] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[0]
+--operation mode is arithmetic
+
+J1_safe_q[0]_lut_out = !J1_safe_q[0];
+J1_safe_q[0] = DFFEAS(J1_safe_q[0]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L2 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella0~COUT
+--operation mode is arithmetic
+
+J1L2 = CARRY(J1_safe_q[0]);
+
+
+--E1L11 is uart:inst|br_gen:u1|bclkx8~21
+--operation mode is normal
+
+E1L11 = sel[1] & sel[0] # !sel[1] & sel[0] & J1_safe_q[1] # !sel[0] & J1_safe_q[0];
+
+
+--J1_safe_q[3] is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|safe_q[3]
+--operation mode is arithmetic
+
+J1_safe_q[3]_carry_eqn = J1L6;
+J1_safe_q[3]_lut_out = J1_safe_q[3] $ (J1_safe_q[3]_carry_eqn);
+J1_safe_q[3] = DFFEAS(J1_safe_q[3]_lut_out, E1_cnt2, VCC, , , , , , );
+
+--J1L8 is uart:inst|br_gen:u1|lpm_counter:ctr2_rtl_0|cntr_rm6:auto_generated|counter_cella3~COUT
+--operation mode is arithmetic
+
+J1L8 = CARRY(!J1L6 # !J1_safe_q[3]);
+
+
+--E1L21 is uart:inst|br_gen:u1|bclkx8~22
+--operation mode is normal
+
+E1L21 = sel[1] & E1L11 & J1_safe_q[3] # !E1L11 & J1_safe_q[2] # !sel[1] & E1L11;
+
+
+--F1_bclkx8_dlayed is uart:inst|uart_receiver:u2|bclkx8_dlayed
+--operation mode is normal
+
+F1_bclkx8_dlayed_lut_out = E1L51;
+F1_bclkx8_dlayed = DFFEAS(F1_bclkx8_dlayed_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_bclkx8_rising is uart:inst|uart_receiver:u2|bclkx8_rising
+--operation mode is normal
+
+F1_bclkx8_rising = !F1_bclkx8_dlayed & sel[2] & E1L41 # !sel[2] & E1L21;
+
+
+--F1_ct1[2] is uart:inst|uart_receiver:u2|ct1[2]
+--operation mode is normal
+
+F1_ct1[2]_lut_out = !F1L21 & F1_ct1[2] $ (F1_ct1[1] & F1L1);
+F1_ct1[2] = DFFEAS(F1_ct1[2]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_ct1[1] is uart:inst|uart_receiver:u2|ct1[1]
+--operation mode is normal
+
+F1_ct1[1]_lut_out = !F1L21 & F1_ct1[1] $ (F1_ct1[0] & F1L22);
+F1_ct1[1] = DFFEAS(F1_ct1[1]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_ct1[0] is uart:inst|uart_receiver:u2|ct1[0]
+--operation mode is normal
+
+F1_ct1[0]_lut_out = !F1L21 & F1_ct1[0] $ F1L22;
+F1_ct1[0] = DFFEAS(F1_ct1[0]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1L92 is uart:inst|uart_receiver:u2|ok_en~52
+--operation mode is normal
+
+F1L92 = F1_bclkx8_rising & F1_ct1[2] & F1_ct1[1] & F1_ct1[0];
+
+
+--F1_state.recv_data is uart:inst|uart_receiver:u2|state.recv_data
+--operation mode is normal
+
+F1_state.recv_data_lut_out = F1L62 # F1_state.recv_data & F1L54 # !F1L92;
+F1_state.recv_data = DFFEAS(F1_state.recv_data_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_ct2[2] is uart:inst|uart_receiver:u2|ct2[2]
+--operation mode is normal
+
+F1_ct2[2]_lut_out = F1L6;
+F1_ct2[2] = DFFEAS(F1_ct2[2]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_ct2[1] is uart:inst|uart_receiver:u2|ct2[1]
+--operation mode is normal
+
+F1_ct2[1]_lut_out = F1L4;
+F1_ct2[1] = DFFEAS(F1_ct2[1]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_ct2[0] is uart:inst|uart_receiver:u2|ct2[0]
+--operation mode is normal
+
+F1_ct2[0]_lut_out = F1L2;
+F1_ct2[0] = DFFEAS(F1_ct2[0]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1_ct2[3] is uart:inst|uart_receiver:u2|ct2[3]
+--operation mode is normal
+
+F1_ct2[3]_lut_out = F1L8 & F1L54 # !F1_state.recv_data # !F1L92;
+F1_ct2[3] = DFFEAS(F1_ct2[3]_lut_out, clk, rst_n, , , , , , );
+
+
+--F1L54 is uart:inst|uart_receiver:u2|reduce_or~36
+--operation mode is normal
+
+F1L54 = F1_ct2[2] # F1_ct2[1] # F1_ct2[0] # !F1_ct2[3];
+
+
+--F1L03 is uart:inst|uart_receiver:u2|ok_en~53
+--operation mode is normal
+
+F1L03 = F1L92 & F1_state.recv_data & rxd & !F1L54;
+
+
+--G1L5 is uart:inst|uart_transmitter:u3|add~43
+--operation mode is arithmetic
+
+G1L5_carry_eqn = G1L4;
+G1L5 = G1_bct[2] $ (!G1L5_carry_eqn);
+
+--G1L6 is uart:inst|uart_transmitter:u3|add~43COUT
+--operation mode is arithmetic
+
+G1L6 = CARRY(G1_bct[2] & !G1L4);
+
+
+--G1L3 is uart:inst|uart_transmitter:u3|add~42
+--operation mode is arithmetic
+
+G1L3_carry_eqn = G1L2;
+G1L3 = G1_bct[1] $ (G1L3_carry_eqn);
+
+--G1L4 is uart:inst|uart_transmitter:u3|add~42COUT
+--operation mode is arithmetic
+
+G1L4 = CARRY(!G1L2 # !G1_bct[1]);
+
+
+--G1L7 is uart:inst|uart_transmitter:u3|add~44
+--operation mode is normal
+
+G1L7_carry_eqn = G1L6;
+G1L7 = G1_bct[3] $ (G1L7_carry_eqn);
+
+
+--G1L1 is uart:inst|uart_transmitter:u3|add~41
+--operation mode is arithmetic
+
+G1L1 = G1L41 $ G1_bct[0];
+
+--G1L2 is uart:inst|uart_transmitter:u3|add~41COUT
+--operation mode is arithmetic
+
+G1L2 = CARRY(G1L41 & G1_bct[0]);
+
+
+--G1_state.synch is uart:inst|uart_transmitter:u3|state.synch
+--operation mode is normal
+
+G1_state.synch_lut_out = G1L51 # G1_state.synch & G1_bclk_dlayed # !E1_ctr3[2];
+G1_state.synch = DFFEAS(G1_state.synch_lut_out, clk, rst_n, , , , , , );
+
+
+--E1L51 is uart:inst|br_gen:u1|bclkx8~29
+--operation mode is normal
+
+E1L51 = sel[2] & E1L41 # !sel[2] & E1L21;
+
+
+--E1_ctr3[1] is uart:inst|br_gen:u1|ctr3[1]
+--operation mode is normal
+
+E1_ctr3[1]_lut_out = !E1_ctr3[1];
+E1_ctr3[1] = DFFEAS(E1_ctr3[1]_lut_out, E1L51, VCC, , E1_ctr3[0], , , , );
+
+
+--E1_ctr3[0] is uart:inst|br_gen:u1|ctr3[0]
+--operation mode is normal
+
+E1_ctr3[0]_lut_out = !E1_ctr3[0];
+E1_ctr3[0] = DFFEAS(E1_ctr3[0]_lut_out, E1L51, VCC, , , , , , );
+
+
+--E1L1 is uart:inst|br_gen:u1|add~90
+--operation mode is normal
+
+E1L1 = E1_ctr3[1] & E1_ctr3[0];
+
+
+--G1_txd_startH_d1 is uart:inst|uart_transmitter:u3|txd_startH_d1
+--operation mode is normal
+
+G1_txd_startH_d1_lut_out = G1_txd_startH_d0;
+G1_txd_startH_d1 = DFFEAS(G1_txd_startH_d1_lut_out, clk, VCC, , rst_n, , , , );
+
+
+--G1_state.idle is uart:inst|uart_transmitter:u3|state.idle
+--operation mode is normal
+
+G1_state.idle_lut_out = G1L43 & G1_state.idle # !G1_txd_startH_d0 & G1_txd_startH_d1;
+G1_state.idle = DFFEAS(G1_state.idle_lut_out, clk, rst_n, , , , , , );
+
+
+--G1_txd_startH_d0 is uart:inst|uart_transmitter:u3|txd_startH_d0
+--operation mode is normal
+
+G1_txd_startH_d0_lut_out = txd_startH;
+G1_txd_startH_d0 = DFFEAS(G1_txd_startH_d0_lut_out, clk, VCC, , rst_n, , , , );
+
+
+--G1L51 is uart:inst|uart_transmitter:u3|loadTSR~31
+--operation mode is normal
+
+G1L51 = G1_txd_startH_d1 & !G1_state.idle & !G1_txd_startH_d0;
+
+
+--G1L41 is uart:inst|uart_transmitter:u3|inc~36
+--operation mode is normal
+
+G1L41 = G1L71 & G1_state.tdata & E1_ctr3[2] & !G1_bclk_dlayed;
+
+
+--G1_tsr[1] is uart:inst|uart_transmitter:u3|tsr[1]
+--operation mode is normal
+
+G1_tsr[1]_lut_out = G1L51 & F1_RDR[0] # !G1L51 & G1_tsr[2];
+G1_tsr[1] = DFFEAS(G1_tsr[1]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--G1L23 is uart:inst|uart_transmitter:u3|tsr~829
+--operation mode is normal
+
+G1L23 = G1L41 & !G1_tsr[1] # !G1L41 & !G1_tsr[0];
+
+
+--D1_sel[1] is scan:inst6|sel[1]
+--operation mode is normal
+
+D1_sel[1]_lut_out = !D1_sel[1];
+D1_sel[1] = DFFEAS(D1_sel[1]_lut_out, K1_safe_q[13], rst_n, , D1_sel[0], , , , );
+
+
+--D1_sel[0] is scan:inst6|sel[0]
+--operation mode is normal
+
+D1_sel[0]_lut_out = !D1_sel[0];
+D1_sel[0] = DFFEAS(D1_sel[0]_lut_out, K1_safe_q[13], rst_n, , , , , , );
+
+
+--K1_safe_q[13] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[13]
+--operation mode is arithmetic
+
+K1_safe_q[13]_carry_eqn = K1L62;
+K1_safe_q[13]_lut_out = K1_safe_q[13] $ (K1_safe_q[13]_carry_eqn);
+K1_safe_q[13] = DFFEAS(K1_safe_q[13]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L82 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella13~COUT
+--operation mode is arithmetic
+
+K1L82 = CARRY(!K1L62 # !K1_safe_q[13]);
+
+
+--D1_sec_ten[0] is scan:inst6|sec_ten[0]
+--operation mode is normal
+
+D1_sec_ten[0]_lut_out = F1_RDR[4];
+D1_sec_ten[0] = DFFEAS(D1_sec_ten[0]_lut_out, clk, VCC, , F1_rxd_readyH, F1_RDR[4], !rst_n, , );
+
+
+--D1_min_one[0] is scan:inst6|min_one[0]
+--operation mode is normal
+
+D1_min_one[0]_lut_out = D1_sec_one[0];
+D1_min_one[0] = DFFEAS(D1_min_one[0]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_sec_one[0] is scan:inst6|sec_one[0]
+--operation mode is normal
+
+D1_sec_one[0]_lut_out = !F1_RDR[0];
+D1_sec_one[0] = DFFEAS(D1_sec_one[0]_lut_out, clk, VCC, , F1_rxd_readyH, F1L33, !rst_n, , );
+
+
+--D1L32 is scan:inst6|Mux~86
+--operation mode is normal
+
+D1L32 = D1_sel[0] & D1_sel[1] # !D1_sel[0] & D1_sel[1] & D1_min_one[0] # !D1_sel[1] & D1_sec_one[0];
+
+
+--D1_min_ten[0] is scan:inst6|min_ten[0]
+--operation mode is normal
+
+D1_min_ten[0]_lut_out = D1_sec_ten[0];
+D1_min_ten[0] = DFFEAS(D1_min_ten[0]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_min_one[1] is scan:inst6|min_one[1]
+--operation mode is normal
+
+D1_min_one[1]_lut_out = D1_sec_one[1];
+D1_min_one[1] = DFFEAS(D1_min_one[1]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_sec_ten[1] is scan:inst6|sec_ten[1]
+--operation mode is normal
+
+D1_sec_ten[1]_lut_out = !F1_RDR[5];
+D1_sec_ten[1] = DFFEAS(D1_sec_ten[1]_lut_out, clk, VCC, , F1_rxd_readyH, F1L14, !rst_n, , );
+
+
+--D1_sec_one[1] is scan:inst6|sec_one[1]
+--operation mode is normal
+
+D1_sec_one[1]_lut_out = !F1_RDR[1];
+D1_sec_one[1] = DFFEAS(D1_sec_one[1]_lut_out, clk, VCC, , F1_rxd_readyH, F1L53, !rst_n, , );
+
+
+--D1L22 is scan:inst6|Mux~84
+--operation mode is normal
+
+D1L22 = D1_sel[1] & D1_sel[0] # !D1_sel[1] & D1_sel[0] & D1_sec_ten[1] # !D1_sel[0] & D1_sec_one[1];
+
+
+--D1_min_ten[1] is scan:inst6|min_ten[1]
+--operation mode is normal
+
+D1_min_ten[1]_lut_out = D1_sec_ten[1];
+D1_min_ten[1] = DFFEAS(D1_min_ten[1]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_sec_ten[2] is scan:inst6|sec_ten[2]
+--operation mode is normal
+
+D1_sec_ten[2]_lut_out = F1_RDR[6];
+D1_sec_ten[2] = DFFEAS(D1_sec_ten[2]_lut_out, clk, VCC, , F1_rxd_readyH, F1_RDR[6], !rst_n, , );
+
+
+--D1_min_one[2] is scan:inst6|min_one[2]
+--operation mode is normal
+
+D1_min_one[2]_lut_out = D1_sec_one[2];
+D1_min_one[2] = DFFEAS(D1_min_one[2]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_sec_one[2] is scan:inst6|sec_one[2]
+--operation mode is normal
+
+D1_sec_one[2]_lut_out = F1_RDR[2];
+D1_sec_one[2] = DFFEAS(D1_sec_one[2]_lut_out, clk, VCC, , F1_rxd_readyH, F1_RDR[2], !rst_n, , );
+
+
+--D1L12 is scan:inst6|Mux~82
+--operation mode is normal
+
+D1L12 = D1_sel[0] & D1_sel[1] # !D1_sel[0] & D1_sel[1] & D1_min_one[2] # !D1_sel[1] & D1_sec_one[2];
+
+
+--D1_min_ten[2] is scan:inst6|min_ten[2]
+--operation mode is normal
+
+D1_min_ten[2]_lut_out = D1_sec_ten[2];
+D1_min_ten[2] = DFFEAS(D1_min_ten[2]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_min_one[3] is scan:inst6|min_one[3]
+--operation mode is normal
+
+D1_min_one[3]_lut_out = D1_sec_one[3];
+D1_min_one[3] = DFFEAS(D1_min_one[3]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--D1_sec_ten[3] is scan:inst6|sec_ten[3]
+--operation mode is normal
+
+D1_sec_ten[3]_lut_out = F1_RDR[7];
+D1_sec_ten[3] = DFFEAS(D1_sec_ten[3]_lut_out, clk, VCC, , F1_rxd_readyH, F1_RDR[7], !rst_n, , );
+
+
+--D1_sec_one[3] is scan:inst6|sec_one[3]
+--operation mode is normal
+
+D1_sec_one[3]_lut_out = !F1_RDR[3];
+D1_sec_one[3] = DFFEAS(D1_sec_one[3]_lut_out, clk, VCC, , F1_rxd_readyH, F1L83, !rst_n, , );
+
+
+--D1L02 is scan:inst6|Mux~80
+--operation mode is normal
+
+D1L02 = D1_sel[1] & D1_sel[0] # !D1_sel[1] & D1_sel[0] & D1_sec_ten[3] # !D1_sel[0] & D1_sec_one[3];
+
+
+--D1_min_ten[3] is scan:inst6|min_ten[3]
+--operation mode is normal
+
+D1_min_ten[3]_lut_out = D1_sec_ten[3];
+D1_min_ten[3] = DFFEAS(D1_min_ten[3]_lut_out, clk, rst_n, , F1_rxd_readyH, , , , );
+
+
+--E1_cnt2 is uart:inst|br_gen:u1|cnt2
+--operation mode is normal
+
+E1_cnt2_lut_out = !E1_cnt2;
+E1_cnt2 = DFFEAS(E1_cnt2_lut_out, clk, VCC, , E1L82, , , , );
+
+
+--F1_state.start_detected is uart:inst|uart_receiver:u2|state.start_detected
+--operation mode is normal
+
+F1_state.start_detected_lut_out = F1L72 # !rxd & F1L82 # !F1_state.idle;
+F1_state.start_detected = DFFEAS(F1_state.start_detected_lut_out, clk, rst_n, , , , , , );
+
+
+--F1L52 is uart:inst|uart_receiver:u2|nextstate.recv_data~187
+--operation mode is normal
+
+F1L52 = F1_state.start_detected & !rxd;
+
+
+--F1L44 is uart:inst|uart_receiver:u2|reduce_nor~0
+--operation mode is normal
+
+F1L44 = F1_ct1[1] & F1_ct1[0] & !F1_ct1[2];
+
+
+--F1L22 is uart:inst|uart_receiver:u2|inc1~96
+--operation mode is normal
+
+F1L22 = F1_bclkx8_rising & F1_state.recv_data # F1L52 & !F1L44;
+
+
+--F1L1 is uart:inst|uart_receiver:u2|add~76
+--operation mode is normal
+
+F1L1 = F1_ct1[0] & F1L22;
+
+
+--F1L11 is uart:inst|uart_receiver:u2|clr1~156
+--operation mode is normal
+
+F1L11 = F1_state.start_detected & rxd # F1L44;
+
+
+--F1L21 is uart:inst|uart_receiver:u2|clr1~157
+--operation mode is normal
+
+F1L21 = F1_bclkx8_rising & F1L11 # F1L92 & F1_state.recv_data # !F1_bclkx8_rising & F1L92 & F1_state.recv_data;
+
+
+--F1L6 is uart:inst|uart_receiver:u2|add~89
+--operation mode is arithmetic
+
+F1L6_carry_eqn = F1L5;
+F1L6 = F1_ct2[2] $ (!F1L6_carry_eqn);
+
+--F1L7 is uart:inst|uart_receiver:u2|add~89COUT
+--operation mode is arithmetic
+
+F1L7 = CARRY(F1_ct2[2] & !F1L5);
+
+
+--F1L4 is uart:inst|uart_receiver:u2|add~88
+--operation mode is arithmetic
+
+F1L4_carry_eqn = F1L3;
+F1L4 = F1_ct2[1] $ (F1L4_carry_eqn);
+
+--F1L5 is uart:inst|uart_receiver:u2|add~88COUT
+--operation mode is arithmetic
+
+F1L5 = CARRY(!F1L3 # !F1_ct2[1]);
+
+
+--F1L2 is uart:inst|uart_receiver:u2|add~87
+--operation mode is arithmetic
+
+F1L2 = F1L32 $ F1_ct2[0];
+
+--F1L3 is uart:inst|uart_receiver:u2|add~87COUT
+--operation mode is arithmetic
+
+F1L3 = CARRY(F1L32 & F1_ct2[0]);
+
+
+--F1L8 is uart:inst|uart_receiver:u2|add~90
+--operation mode is normal
+
+F1L8_carry_eqn = F1L7;
+F1L8 = F1_ct2[3] $ (F1L8_carry_eqn);
+
+
+--G1_tsr[2] is uart:inst|uart_transmitter:u3|tsr[2]
+--operation mode is normal
+
+G1_tsr[2]_lut_out = G1L51 & F1_RDR[1] # !G1L51 & G1_tsr[3];
+G1_tsr[2] = DFFEAS(G1_tsr[2]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--F1_RDR[0] is uart:inst|uart_receiver:u2|RDR[0]
+--operation mode is normal
+
+F1_RDR[0]_lut_out = !F1_RSR[0];
+F1_RDR[0] = DFFEAS(F1_RDR[0]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--G1L52 is uart:inst|uart_transmitter:u3|tsr[2]~113
+--operation mode is normal
+
+G1L52 = G1L51 # G1L71 & G1_state.tdata & G1L61;
+
+
+--K1_safe_q[0] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[0]
+--operation mode is arithmetic
+
+K1_safe_q[0]_lut_out = !K1_safe_q[0];
+K1_safe_q[0] = DFFEAS(K1_safe_q[0]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L2 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella0~COUT
+--operation mode is arithmetic
+
+K1L2 = CARRY(K1_safe_q[0]);
+
+
+--K1_safe_q[1] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[1]
+--operation mode is arithmetic
+
+K1_safe_q[1]_carry_eqn = K1L2;
+K1_safe_q[1]_lut_out = K1_safe_q[1] $ (K1_safe_q[1]_carry_eqn);
+K1_safe_q[1] = DFFEAS(K1_safe_q[1]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L4 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella1~COUT
+--operation mode is arithmetic
+
+K1L4 = CARRY(!K1L2 # !K1_safe_q[1]);
+
+
+--K1_safe_q[2] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[2]
+--operation mode is arithmetic
+
+K1_safe_q[2]_carry_eqn = K1L4;
+K1_safe_q[2]_lut_out = K1_safe_q[2] $ (!K1_safe_q[2]_carry_eqn);
+K1_safe_q[2] = DFFEAS(K1_safe_q[2]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L6 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella2~COUT
+--operation mode is arithmetic
+
+K1L6 = CARRY(K1_safe_q[2] & !K1L4);
+
+
+--C1L2 is clk_div:inst1|reduce_nor~191
+--operation mode is normal
+
+C1L2 = K1_safe_q[13] & !K1_safe_q[0] & !K1_safe_q[1] & !K1_safe_q[2];
+
+
+--K1_safe_q[3] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[3]
+--operation mode is arithmetic
+
+K1_safe_q[3]_carry_eqn = K1L6;
+K1_safe_q[3]_lut_out = K1_safe_q[3] $ (K1_safe_q[3]_carry_eqn);
+K1_safe_q[3] = DFFEAS(K1_safe_q[3]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L8 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella3~COUT
+--operation mode is arithmetic
+
+K1L8 = CARRY(!K1L6 # !K1_safe_q[3]);
+
+
+--K1_safe_q[4] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[4]
+--operation mode is arithmetic
+
+K1_safe_q[4]_carry_eqn = K1L8;
+K1_safe_q[4]_lut_out = K1_safe_q[4] $ (!K1_safe_q[4]_carry_eqn);
+K1_safe_q[4] = DFFEAS(K1_safe_q[4]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L01 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella4~COUT
+--operation mode is arithmetic
+
+K1L01 = CARRY(K1_safe_q[4] & !K1L8);
+
+
+--K1_safe_q[5] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[5]
+--operation mode is arithmetic
+
+K1_safe_q[5]_carry_eqn = K1L01;
+K1_safe_q[5]_lut_out = K1_safe_q[5] $ (K1_safe_q[5]_carry_eqn);
+K1_safe_q[5] = DFFEAS(K1_safe_q[5]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L21 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella5~COUT
+--operation mode is arithmetic
+
+K1L21 = CARRY(!K1L01 # !K1_safe_q[5]);
+
+
+--K1_safe_q[6] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[6]
+--operation mode is arithmetic
+
+K1_safe_q[6]_carry_eqn = K1L21;
+K1_safe_q[6]_lut_out = K1_safe_q[6] $ (!K1_safe_q[6]_carry_eqn);
+K1_safe_q[6] = DFFEAS(K1_safe_q[6]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L41 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella6~COUT
+--operation mode is arithmetic
+
+K1L41 = CARRY(K1_safe_q[6] & !K1L21);
+
+
+--C1L3 is clk_div:inst1|reduce_nor~192
+--operation mode is normal
+
+C1L3 = !K1_safe_q[3] & !K1_safe_q[4] & !K1_safe_q[5] & !K1_safe_q[6];
+
+
+--K1_safe_q[10] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[10]
+--operation mode is arithmetic
+
+K1_safe_q[10]_carry_eqn = K1L02;
+K1_safe_q[10]_lut_out = K1_safe_q[10] $ (!K1_safe_q[10]_carry_eqn);
+K1_safe_q[10] = DFFEAS(K1_safe_q[10]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L22 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella10~COUT
+--operation mode is arithmetic
+
+K1L22 = CARRY(K1_safe_q[10] & !K1L02);
+
+
+--K1_safe_q[7] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[7]
+--operation mode is arithmetic
+
+K1_safe_q[7]_carry_eqn = K1L41;
+K1_safe_q[7]_lut_out = K1_safe_q[7] $ (K1_safe_q[7]_carry_eqn);
+K1_safe_q[7] = DFFEAS(K1_safe_q[7]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L61 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella7~COUT
+--operation mode is arithmetic
+
+K1L61 = CARRY(!K1L41 # !K1_safe_q[7]);
+
+
+--K1_safe_q[8] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[8]
+--operation mode is arithmetic
+
+K1_safe_q[8]_carry_eqn = K1L61;
+K1_safe_q[8]_lut_out = K1_safe_q[8] $ (!K1_safe_q[8]_carry_eqn);
+K1_safe_q[8] = DFFEAS(K1_safe_q[8]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L81 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella8~COUT
+--operation mode is arithmetic
+
+K1L81 = CARRY(K1_safe_q[8] & !K1L61);
+
+
+--K1_safe_q[9] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[9]
+--operation mode is arithmetic
+
+K1_safe_q[9]_carry_eqn = K1L81;
+K1_safe_q[9]_lut_out = K1_safe_q[9] $ (K1_safe_q[9]_carry_eqn);
+K1_safe_q[9] = DFFEAS(K1_safe_q[9]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L02 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella9~COUT
+--operation mode is arithmetic
+
+K1L02 = CARRY(!K1L81 # !K1_safe_q[9]);
+
+
+--C1L4 is clk_div:inst1|reduce_nor~193
+--operation mode is normal
+
+C1L4 = K1_safe_q[10] & !K1_safe_q[7] & !K1_safe_q[8] & !K1_safe_q[9];
+
+
+--K1_safe_q[11] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[11]
+--operation mode is arithmetic
+
+K1_safe_q[11]_carry_eqn = K1L22;
+K1_safe_q[11]_lut_out = K1_safe_q[11] $ (K1_safe_q[11]_carry_eqn);
+K1_safe_q[11] = DFFEAS(K1_safe_q[11]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L42 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella11~COUT
+--operation mode is arithmetic
+
+K1L42 = CARRY(!K1L22 # !K1_safe_q[11]);
+
+
+--K1_safe_q[12] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[12]
+--operation mode is arithmetic
+
+K1_safe_q[12]_carry_eqn = K1L42;
+K1_safe_q[12]_lut_out = K1_safe_q[12] $ (!K1_safe_q[12]_carry_eqn);
+K1_safe_q[12] = DFFEAS(K1_safe_q[12]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L62 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella12~COUT
+--operation mode is arithmetic
+
+K1L62 = CARRY(K1_safe_q[12] & !K1L42);
+
+
+--K1_safe_q[14] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[14]
+--operation mode is arithmetic
+
+K1_safe_q[14]_carry_eqn = K1L82;
+K1_safe_q[14]_lut_out = K1_safe_q[14] $ (!K1_safe_q[14]_carry_eqn);
+K1_safe_q[14] = DFFEAS(K1_safe_q[14]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L03 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella14~COUT
+--operation mode is arithmetic
+
+K1L03 = CARRY(K1_safe_q[14] & !K1L82);
+
+
+--K1_safe_q[15] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[15]
+--operation mode is arithmetic
+
+K1_safe_q[15]_carry_eqn = K1L03;
+K1_safe_q[15]_lut_out = K1_safe_q[15] $ (K1_safe_q[15]_carry_eqn);
+K1_safe_q[15] = DFFEAS(K1_safe_q[15]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L23 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella15~COUT
+--operation mode is arithmetic
+
+K1L23 = CARRY(!K1L03 # !K1_safe_q[15]);
+
+
+--C1L5 is clk_div:inst1|reduce_nor~194
+--operation mode is normal
+
+C1L5 = !K1_safe_q[11] & !K1_safe_q[12] & !K1_safe_q[14] & !K1_safe_q[15];
+
+
+--C1L6 is clk_div:inst1|reduce_nor~195
+--operation mode is normal
+
+C1L6 = C1L2 & C1L3 & C1L4 & C1L5;
+
+
+--K1_safe_q[18] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[18]
+--operation mode is arithmetic
+
+K1_safe_q[18]_carry_eqn = K1L63;
+K1_safe_q[18]_lut_out = K1_safe_q[18] $ (!K1_safe_q[18]_carry_eqn);
+K1_safe_q[18] = DFFEAS(K1_safe_q[18]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L83 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella18~COUT
+--operation mode is arithmetic
+
+K1L83 = CARRY(K1_safe_q[18] & !K1L63);
+
+
+--K1_safe_q[16] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[16]
+--operation mode is arithmetic
+
+K1_safe_q[16]_carry_eqn = K1L23;
+K1_safe_q[16]_lut_out = K1_safe_q[16] $ (!K1_safe_q[16]_carry_eqn);
+K1_safe_q[16] = DFFEAS(K1_safe_q[16]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L43 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella16~COUT
+--operation mode is arithmetic
+
+K1L43 = CARRY(K1_safe_q[16] & !K1L23);
+
+
+--K1_safe_q[17] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[17]
+--operation mode is arithmetic
+
+K1_safe_q[17]_carry_eqn = K1L43;
+K1_safe_q[17]_lut_out = K1_safe_q[17] $ (K1_safe_q[17]_carry_eqn);
+K1_safe_q[17] = DFFEAS(K1_safe_q[17]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L63 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella17~COUT
+--operation mode is arithmetic
+
+K1L63 = CARRY(!K1L43 # !K1_safe_q[17]);
+
+
+--K1_safe_q[19] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[19]
+--operation mode is arithmetic
+
+K1_safe_q[19]_carry_eqn = K1L83;
+K1_safe_q[19]_lut_out = K1_safe_q[19] $ (K1_safe_q[19]_carry_eqn);
+K1_safe_q[19] = DFFEAS(K1_safe_q[19]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L04 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella19~COUT
+--operation mode is arithmetic
+
+K1L04 = CARRY(!K1L83 # !K1_safe_q[19]);
+
+
+--C1L7 is clk_div:inst1|reduce_nor~196
+--operation mode is normal
+
+C1L7 = K1_safe_q[18] & !K1_safe_q[16] & !K1_safe_q[17] & !K1_safe_q[19];
+
+
+--K1_safe_q[20] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[20]
+--operation mode is arithmetic
+
+K1_safe_q[20]_carry_eqn = K1L04;
+K1_safe_q[20]_lut_out = K1_safe_q[20] $ (!K1_safe_q[20]_carry_eqn);
+K1_safe_q[20] = DFFEAS(K1_safe_q[20]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L24 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella20~COUT
+--operation mode is arithmetic
+
+K1L24 = CARRY(K1_safe_q[20] & !K1L04);
+
+
+--K1_safe_q[21] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[21]
+--operation mode is arithmetic
+
+K1_safe_q[21]_carry_eqn = K1L24;
+K1_safe_q[21]_lut_out = K1_safe_q[21] $ (K1_safe_q[21]_carry_eqn);
+K1_safe_q[21] = DFFEAS(K1_safe_q[21]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L44 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella21~COUT
+--operation mode is arithmetic
+
+K1L44 = CARRY(!K1L24 # !K1_safe_q[21]);
+
+
+--K1_safe_q[22] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[22]
+--operation mode is arithmetic
+
+K1_safe_q[22]_carry_eqn = K1L44;
+K1_safe_q[22]_lut_out = K1_safe_q[22] $ (!K1_safe_q[22]_carry_eqn);
+K1_safe_q[22] = DFFEAS(K1_safe_q[22]_lut_out, clk, !C1L1, , , , , , );
+
+--K1L64 is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|counter_cella22~COUT
+--operation mode is arithmetic
+
+K1L64 = CARRY(K1_safe_q[22] & !K1L44);
+
+
+--K1_safe_q[23] is clk_div:inst1|lpm_counter:cnt_rtl_1|cntr_b67:auto_generated|safe_q[23]
+--operation mode is normal
+
+K1_safe_q[23]_carry_eqn = K1L64;
+K1_safe_q[23]_lut_out = K1_safe_q[23] $ (K1_safe_q[23]_carry_eqn);
+K1_safe_q[23] = DFFEAS(K1_safe_q[23]_lut_out, clk, !C1L1, , , , , , );
+
+
+--C1L8 is clk_div:inst1|reduce_nor~197
+--operation mode is normal
+
+C1L8 = K1_safe_q[20] & K1_safe_q[21] & K1_safe_q[22] & K1_safe_q[23];
+
+
+--C1L1 is clk_div:inst1|reduce_nor~0
+--operation mode is normal
+
+C1L1 = C1L6 & C1L7 & C1L8;
+
+
+--F1_RDR[4] is uart:inst|uart_receiver:u2|RDR[4]
+--operation mode is normal
+
+F1_RDR[4]_lut_out = F1_RSR[4];
+F1_RDR[4] = DFFEAS(F1_RDR[4]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--F1_RDR[5] is uart:inst|uart_receiver:u2|RDR[5]
+--operation mode is normal
+
+F1_RDR[5]_lut_out = !F1_RSR[5];
+F1_RDR[5] = DFFEAS(F1_RDR[5]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--F1_RDR[1] is uart:inst|uart_receiver:u2|RDR[1]
+--operation mode is normal
+
+F1_RDR[1]_lut_out = !F1_RSR[1];
+F1_RDR[1] = DFFEAS(F1_RDR[1]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--F1_RDR[6] is uart:inst|uart_receiver:u2|RDR[6]
+--operation mode is normal
+
+F1_RDR[6]_lut_out = F1_RSR[6];
+F1_RDR[6] = DFFEAS(F1_RDR[6]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--F1_RDR[2] is uart:inst|uart_receiver:u2|RDR[2]
+--operation mode is normal
+
+F1_RDR[2]_lut_out = F1_RSR[2];
+F1_RDR[2] = DFFEAS(F1_RDR[2]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--F1_RDR[7] is uart:inst|uart_receiver:u2|RDR[7]
+--operation mode is normal
+
+F1_RDR[7]_lut_out = F1_RSR[7];
+F1_RDR[7] = DFFEAS(F1_RDR[7]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--F1_RDR[3] is uart:inst|uart_receiver:u2|RDR[3]
+--operation mode is normal
+
+F1_RDR[3]_lut_out = !F1_RSR[3];
+F1_RDR[3] = DFFEAS(F1_RDR[3]_lut_out, clk, rst_n, , F1L03, , , , );
+
+
+--E1_cnt1[3] is uart:inst|br_gen:u1|cnt1[3]
+--operation mode is normal
+
+E1_cnt1[3]_lut_out = E1L8 & E1L92 # !E1_cnt1[4];
+E1_cnt1[3] = DFFEAS(E1_cnt1[3]_lut_out, clk, VCC, , , , , , );
+
+
+--E1_cnt1[2] is uart:inst|br_gen:u1|cnt1[2]
+--operation mode is normal
+
+E1_cnt1[2]_lut_out = E1L6;
+E1_cnt1[2] = DFFEAS(E1_cnt1[2]_lut_out, clk, VCC, , , , , , );
+
+
+--E1_cnt1[0] is uart:inst|br_gen:u1|cnt1[0]
+--operation mode is normal
+
+E1_cnt1[0]_lut_out = E1L2;
+E1_cnt1[0] = DFFEAS(E1_cnt1[0]_lut_out, clk, VCC, , , , , , );
+
+
+--E1_cnt1[1] is uart:inst|br_gen:u1|cnt1[1]
+--operation mode is normal
+
+E1_cnt1[1]_lut_out = E1L4 & E1L92 # !E1_cnt1[4];
+E1_cnt1[1] = DFFEAS(E1_cnt1[1]_lut_out, clk, VCC, , , , , , );
+
+
+--E1L22 is uart:inst|br_gen:u1|cnt1[4]~185
+--operation mode is normal
+
+E1L22 = E1_cnt1[3] & E1_cnt1[2] & E1_cnt1[0] & !E1_cnt1[1];
+
+
+--E1_cnt1[4] is uart:inst|br_gen:u1|cnt1[4]
+--operation mode is normal
+
+E1_cnt1[4]_lut_out = E1L01 & E1L92 # !E1_cnt1[4];
+E1_cnt1[4] = DFFEAS(E1_cnt1[4]_lut_out, clk, VCC, , , , , , );
+
+
+--E1L92 is uart:inst|br_gen:u1|reduce_nor~36
+--operation mode is normal
+
+E1L92 = E1_cnt1[2] # E1_cnt1[0] # !E1_cnt1[1] # !E1_cnt1[3];
+
+
+--E1L82 is uart:inst|br_gen:u1|process0~0
+--operation mode is normal
+
+E1L82 = E1_cnt1[4] & !E1L92 # !E1_cnt1[4] & E1L22;
+
+
+--F1L72 is uart:inst|uart_receiver:u2|nextstate.start_detected~165
+--operation mode is normal
+
+F1L72 = F1_state.start_detected & !F1_bclkx8_rising;
+
+
+--F1L82 is uart:inst|uart_receiver:u2|nextstate.start_detected~166
+--operation mode is normal
+
+F1L82 = F1_state.start_detected & F1_ct1[2] # !F1_ct1[0] # !F1_ct1[1];
+
+
+--F1_state.idle is uart:inst|uart_receiver:u2|state.idle
+--operation mode is normal
+
+F1_state.idle_lut_out = !F1L42 & F1_state.recv_data # F1L72 # !rxd;
+F1_state.idle = DFFEAS(F1_state.idle_lut_out, clk, rst_n, , , , , , );
+
+
+--F1L32 is uart:inst|uart_receiver:u2|inc2~4
+--operation mode is normal
+
+F1L32 = F1L92 & F1_state.recv_data & F1L54;
+
+
+--G1_tsr[3] is uart:inst|uart_transmitter:u3|tsr[3]
+--operation mode is normal
+
+G1_tsr[3]_lut_out = G1L51 & !F1_RDR[2] # !G1L51 & G1_tsr[4];
+G1_tsr[3] = DFFEAS(G1_tsr[3]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--F1_RSR[0] is uart:inst|uart_receiver:u2|RSR[0]
+--operation mode is normal
+
+F1_RSR[0]_lut_out = F1_RSR[1];
+F1_RSR[0] = DFFEAS(F1_RSR[0]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[4] is uart:inst|uart_receiver:u2|RSR[4]
+--operation mode is normal
+
+F1_RSR[4]_lut_out = F1_RSR[5];
+F1_RSR[4] = DFFEAS(F1_RSR[4]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[5] is uart:inst|uart_receiver:u2|RSR[5]
+--operation mode is normal
+
+F1_RSR[5]_lut_out = F1_RSR[6];
+F1_RSR[5] = DFFEAS(F1_RSR[5]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[1] is uart:inst|uart_receiver:u2|RSR[1]
+--operation mode is normal
+
+F1_RSR[1]_lut_out = F1_RSR[2];
+F1_RSR[1] = DFFEAS(F1_RSR[1]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[6] is uart:inst|uart_receiver:u2|RSR[6]
+--operation mode is normal
+
+F1_RSR[6]_lut_out = F1_RSR[7];
+F1_RSR[6] = DFFEAS(F1_RSR[6]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[2] is uart:inst|uart_receiver:u2|RSR[2]
+--operation mode is normal
+
+F1_RSR[2]_lut_out = F1_RSR[3];
+F1_RSR[2] = DFFEAS(F1_RSR[2]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[7] is uart:inst|uart_receiver:u2|RSR[7]
+--operation mode is normal
+
+F1_RSR[7]_lut_out = rxd;
+F1_RSR[7] = DFFEAS(F1_RSR[7]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--F1_RSR[3] is uart:inst|uart_receiver:u2|RSR[3]
+--operation mode is normal
+
+F1_RSR[3]_lut_out = F1_RSR[4];
+F1_RSR[3] = DFFEAS(F1_RSR[3]_lut_out, clk, VCC, , F1L84, , , , );
+
+
+--E1L8 is uart:inst|br_gen:u1|add~126
+--operation mode is arithmetic
+
+E1L8_carry_eqn = E1L7;
+E1L8 = E1_cnt1[3] $ (E1L8_carry_eqn);
+
+--E1L9 is uart:inst|br_gen:u1|add~126COUT
+--operation mode is arithmetic
+
+E1L9 = CARRY(!E1L7 # !E1_cnt1[3]);
+
+
+--E1L6 is uart:inst|br_gen:u1|add~125
+--operation mode is arithmetic
+
+E1L6_carry_eqn = E1L5;
+E1L6 = E1_cnt1[2] $ (!E1L6_carry_eqn);
+
+--E1L7 is uart:inst|br_gen:u1|add~125COUT
+--operation mode is arithmetic
+
+E1L7 = CARRY(E1_cnt1[2] & !E1L5);
+
+
+--E1L2 is uart:inst|br_gen:u1|add~123
+--operation mode is arithmetic
+
+E1L2 = !E1_cnt1[0];
+
+--E1L3 is uart:inst|br_gen:u1|add~123COUT
+--operation mode is arithmetic
+
+E1L3 = CARRY(E1_cnt1[0]);
+
+
+--E1L4 is uart:inst|br_gen:u1|add~124
+--operation mode is arithmetic
+
+E1L4_carry_eqn = E1L3;
+E1L4 = E1_cnt1[1] $ (E1L4_carry_eqn);
+
+--E1L5 is uart:inst|br_gen:u1|add~124COUT
+--operation mode is arithmetic
+
+E1L5 = CARRY(!E1L3 # !E1_cnt1[1]);
+
+
+--E1L01 is uart:inst|br_gen:u1|add~127
+--operation mode is normal
+
+E1L01_carry_eqn = E1L9;
+E1L01 = E1_cnt1[4] $ (!E1L01_carry_eqn);
+
+
+--F1L42 is uart:inst|uart_receiver:u2|nextstate.idle~226
+--operation mode is normal
+
+F1L42 = F1L92 & F1_state.recv_data & !F1L54;
+
+
+--G1_tsr[4] is uart:inst|uart_transmitter:u3|tsr[4]
+--operation mode is normal
+
+G1_tsr[4]_lut_out = G1L51 & F1_RDR[3] # !G1L51 & G1_tsr[5];
+G1_tsr[4] = DFFEAS(G1_tsr[4]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--F1L84 is uart:inst|uart_receiver:u2|RSR[0]~7
+--operation mode is normal
+
+F1L84 = F1L92 & F1_state.recv_data & F1L54 & rst_n;
+
+
+--G1_tsr[5] is uart:inst|uart_transmitter:u3|tsr[5]
+--operation mode is normal
+
+G1_tsr[5]_lut_out = G1L51 & !F1_RDR[4] # !G1L51 & G1_tsr[6];
+G1_tsr[5] = DFFEAS(G1_tsr[5]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--G1_tsr[6] is uart:inst|uart_transmitter:u3|tsr[6]
+--operation mode is normal
+
+G1_tsr[6]_lut_out = G1L51 & F1_RDR[5] # !G1L51 & G1_tsr[7];
+G1_tsr[6] = DFFEAS(G1_tsr[6]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--G1_tsr[7] is uart:inst|uart_transmitter:u3|tsr[7]
+--operation mode is normal
+
+G1_tsr[7]_lut_out = G1L51 & !F1_RDR[6] # !G1L51 & G1_tsr[8];
+G1_tsr[7] = DFFEAS(G1_tsr[7]_lut_out, clk, rst_n, , G1L52, , , , );
+
+
+--G1_tsr[8] is uart:inst|uart_transmitter:u3|tsr[8]
+--operation mode is normal
+
+G1_tsr[8]_lut_out = G1L51 & !F1_RDR[7] # !G1L51 & !G1L33 & G1_tsr[8];
+G1_tsr[8] = DFFEAS(G1_tsr[8]_lut_out, clk, rst_n, , , , , , );
+
+
+--G1L33 is uart:inst|uart_transmitter:u3|tsr~838
+--operation mode is normal
+
+G1L33 = G1L71 & G1_state.tdata & G1L61 & !G1_state.synch;
+
+
+--G1L43 is uart:inst|uart_transmitter:u3|txd_doneH~1
+--operation mode is normal
+
+G1L43 = G1_bclk_dlayed # G1L71 # !G1_state.tdata # !E1_ctr3[2];
+
+
+--F1L62 is uart:inst|uart_receiver:u2|nextstate.recv_data~189
+--operation mode is normal
+
+F1L62 = F1_state.start_detected & !rxd & F1_bclkx8_rising & F1L44;
+
+
+--sel[0] is sel[0]
+--operation mode is input
+
+sel[0] = INPUT();
+
+
+--sel[1] is sel[1]
+--operation mode is input
+
+sel[1] = INPUT();
+
+
+--sel[2] is sel[2]
+--operation mode is input
+
+sel[2] = INPUT();
+
+
+--rxd is rxd
+--operation mode is input
+
+rxd = INPUT();
+
+
+--clk is clk
+--operation mode is input
+
+clk = INPUT();
+
+
+--rst_n is rst_n
+--operation mode is input
+
+rst_n = INPUT();
+
+
+--txd_startH is txd_startH
+--operation mode is input
+
+txd_startH = INPUT();
+
+
+--rxd_readyH is rxd_readyH
+--operation mode is output
+
+rxd_readyH = OUTPUT(F1_rxd_readyH);
+
+
+--txd_doneH is txd_doneH
+--operation mode is output
+
+txd_doneH = OUTPUT(!G1L43);
+
+
+--txd is txd
+--operation mode is output
+
+txd = OUTPUT(!G1_tsr[0]);
+
+
+--dig4 is dig4
+--operation mode is output
+
+dig4 = OUTPUT(D1_com_mten);
+
+
+--dig3 is dig3
+--operation mode is output
+
+dig3 = OUTPUT(D1_com_mone);
+
+
+--dig2 is dig2
+--operation mode is output
+
+dig2 = OUTPUT(D1_com_sten);
+
+
+--dig1 is dig1
+--operation mode is output
+
+dig1 = OUTPUT(D1_com_sone);
+
+
+--seven_seg[7] is seven_seg[7]
+--operation mode is output
+
+seven_seg[7] = OUTPUT(GND);
+
+
+--seven_seg[6] is seven_seg[6]
+--operation mode is output
+
+seven_seg[6] = OUTPUT(!D1L34);
+
+
+--seven_seg[5] is seven_seg[5]
+--operation mode is output
+
+seven_seg[5] = OUTPUT(D1L24);
+
+
+--seven_seg[4] is seven_seg[4]
+--operation mode is output
+
+seven_seg[4] = OUTPUT(D1L14);
+
+
+--seven_seg[3] is seven_seg[3]
+--operation mode is output
+
+seven_seg[3] = OUTPUT(D1L04);
+
+
+--seven_seg[2] is seven_seg[2]
+--operation mode is output
+
+seven_seg[2] = OUTPUT(D1L93);
+
+
+--seven_seg[1] is seven_seg[1]
+--operation mode is output
+
+seven_seg[1] = OUTPUT(D1L83);
+
+
+--seven_seg[0] is seven_seg[0]
+--operation mode is output
+
+seven_seg[0] = OUTPUT(D1L73);
+
+
+--F1L33 is uart:inst|uart_receiver:u2|RDR[0]~32
+--operation mode is normal
+
+F1L33 = !F1_RDR[0];
+
+
+--F1L53 is uart:inst|uart_receiver:u2|RDR[1]~33
+--operation mode is normal
+
+F1L53 = !F1_RDR[1];
+
+
+--F1L83 is uart:inst|uart_receiver:u2|RDR[3]~34
+--operation mode is normal
+
+F1L83 = !F1_RDR[3];
+
+
+--F1L14 is uart:inst|uart_receiver:u2|RDR[5]~35
+--operation mode is normal
+
+F1L14 = !F1_RDR[5];
+
+

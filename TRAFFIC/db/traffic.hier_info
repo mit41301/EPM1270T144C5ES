@@ -1,0 +1,130 @@
+|traffic
+led3 <= traffic_sm:inst2.red1
+clk => clk_gen:inst1.clk_in
+sw1 => traffic_sm:inst2.rst
+sw1 => bin2seg0_scan:inst.rst
+dip[0] => traffic_sm:inst2.dip[0]
+dip[1] => traffic_sm:inst2.dip[1]
+led2 <= traffic_sm:inst2.yellow1
+led1 <= traffic_sm:inst2.green1
+led7 <= traffic_sm:inst2.red2
+led6 <= traffic_sm:inst2.yellow2
+led5 <= traffic_sm:inst2.green2
+dig1 <= bin2seg0_scan:inst.dig1
+dig2 <= bin2seg0_scan:inst.dig2
+dig3 <= bin2seg0_scan:inst.dig3
+dig4 <= bin2seg0_scan:inst.dig4
+seg[0] <= bin2seg0_scan:inst.seven_seg[0]
+seg[1] <= bin2seg0_scan:inst.seven_seg[1]
+seg[2] <= bin2seg0_scan:inst.seven_seg[2]
+seg[3] <= bin2seg0_scan:inst.seven_seg[3]
+seg[4] <= bin2seg0_scan:inst.seven_seg[4]
+seg[5] <= bin2seg0_scan:inst.seven_seg[5]
+seg[6] <= bin2seg0_scan:inst.seven_seg[6]
+seg[7] <= bin2seg0_scan:inst.seven_seg[7]
+
+
+|traffic|traffic_sm:inst2
+clk => present_state~0.IN1
+rst => present_state~1.IN1
+dip[0] => reduce_nor~1.IN1
+dip[0] => reduce_nor~0.IN1
+dip[1] => reduce_nor~0.IN0
+dip[1] => reduce_nor~1.IN0
+red1 <= reduce_or~3.DB_MAX_OUTPUT_PORT_TYPE
+yellow1 <= present_state.s3.DB_MAX_OUTPUT_PORT_TYPE
+green1 <= reduce_or~0.DB_MAX_OUTPUT_PORT_TYPE
+red2 <= reduce_or~3.DB_MAX_OUTPUT_PORT_TYPE
+yellow2 <= present_state.s7.DB_MAX_OUTPUT_PORT_TYPE
+green2 <= reduce_or~4.DB_MAX_OUTPUT_PORT_TYPE
+time1[0] <= time1~1.DB_MAX_OUTPUT_PORT_TYPE
+time1[1] <= time1~0.DB_MAX_OUTPUT_PORT_TYPE
+time1[2] <= reduce_or~3.DB_MAX_OUTPUT_PORT_TYPE
+time1[3] <= reduce_or~3.DB_MAX_OUTPUT_PORT_TYPE
+time2[0] <= time2~1.DB_MAX_OUTPUT_PORT_TYPE
+time2[1] <= time2~0.DB_MAX_OUTPUT_PORT_TYPE
+time2[2] <= reduce_or~3.DB_MAX_OUTPUT_PORT_TYPE
+time2[3] <= reduce_or~3.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|traffic|clk_gen:inst1
+clk_in => cnt[22].CLK
+clk_in => cnt[21].CLK
+clk_in => cnt[20].CLK
+clk_in => cnt[19].CLK
+clk_in => cnt[18].CLK
+clk_in => cnt[17].CLK
+clk_in => cnt[16].CLK
+clk_in => cnt[15].CLK
+clk_in => cnt[14].CLK
+clk_in => cnt[13].CLK
+clk_in => cnt[12].CLK
+clk_in => cnt[11].CLK
+clk_in => cnt[10].CLK
+clk_in => cnt[9].CLK
+clk_in => cnt[8].CLK
+clk_in => cnt[7].CLK
+clk_in => cnt[6].CLK
+clk_in => cnt[5].CLK
+clk_in => cnt[4].CLK
+clk_in => cnt[3].CLK
+clk_in => cnt[2].CLK
+clk_in => cnt[1].CLK
+clk_in => cnt[0].CLK
+clk_in => cnt[23].CLK
+clk_out1 <= cnt[23].DB_MAX_OUTPUT_PORT_TYPE
+clk_out2 <= cnt[13].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|traffic|bin2seg0_scan:inst
+clk_scan => dig1~reg0.CLK
+clk_scan => dig4~reg0.CLK
+clk_scan => dig3~reg0.CLK
+clk_scan => sel[1].CLK
+clk_scan => sel[0].CLK
+clk_scan => bin[3].CLK
+clk_scan => bin[2].CLK
+clk_scan => bin[1].CLK
+clk_scan => bin[0].CLK
+clk_scan => dig2~reg0.CLK
+rst => dig1~reg0.ACLR
+rst => dig4~reg0.ACLR
+rst => dig3~reg0.ACLR
+rst => sel[1].ACLR
+rst => sel[0].ACLR
+rst => dig2~reg0.ACLR
+rst => bin[3].ENA
+rst => bin[2].ENA
+rst => bin[1].ENA
+rst => bin[0].ENA
+seg_en => ~NO_FANOUT~
+min_ten[0] => Mux~3.IN0
+min_ten[1] => Mux~2.IN0
+min_ten[2] => Mux~1.IN0
+min_ten[3] => Mux~0.IN0
+min_one[0] => Mux~3.IN1
+min_one[1] => Mux~2.IN1
+min_one[2] => Mux~1.IN1
+min_one[3] => Mux~0.IN1
+sec_ten[0] => Mux~3.IN2
+sec_ten[1] => Mux~2.IN2
+sec_ten[2] => Mux~1.IN2
+sec_ten[3] => Mux~0.IN2
+sec_one[0] => Mux~3.IN3
+sec_one[1] => Mux~2.IN3
+sec_one[2] => Mux~1.IN3
+sec_one[3] => Mux~0.IN3
+seven_seg[0] <= Mux~15.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[1] <= Mux~14.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[2] <= Mux~13.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[3] <= Mux~12.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[4] <= Mux~11.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[5] <= Mux~10.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[6] <= Mux~9.DB_MAX_OUTPUT_PORT_TYPE
+seven_seg[7] <= Mux~8.DB_MAX_OUTPUT_PORT_TYPE
+dig1 <= dig1~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dig2 <= dig2~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dig3 <= dig3~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dig4 <= dig4~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+

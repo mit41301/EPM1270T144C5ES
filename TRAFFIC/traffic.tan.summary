@@ -1,0 +1,56 @@
+--------------------------------------------------------------------------------------
+Timing Analyzer Summary
+--------------------------------------------------------------------------------------
+
+Type           : Worst-case tsu
+Slack          : N/A
+Required Time  : None
+Actual Time    : -1.824 ns
+From           : sw1
+To             : bin2seg0_scan:inst|bin[0]
+From Clock     : 
+To Clock       : clk
+Failed Paths   : 0
+
+Type           : Worst-case tco
+Slack          : N/A
+Required Time  : None
+Actual Time    : 16.494 ns
+From           : bin2seg0_scan:inst|bin[3]
+To             : seg[0]
+From Clock     : clk
+To Clock       : 
+Failed Paths   : 0
+
+Type           : Worst-case th
+Slack          : N/A
+Required Time  : None
+Actual Time    : 3.325 ns
+From           : dip[1]
+To             : traffic_sm:inst2|present_state.s1
+From Clock     : 
+To Clock       : clk
+Failed Paths   : 0
+
+Type           : Clock Setup: 'clk'
+Slack          : N/A
+Required Time  : None
+Actual Time    : 179.89 MHz ( period = 5.559 ns )
+From           : clk_gen:inst1|lpm_counter:cnt_rtl_0|cntr_b67:auto_generated|safe_q[2]
+To             : clk_gen:inst1|lpm_counter:cnt_rtl_0|cntr_b67:auto_generated|safe_q[23]
+From Clock     : clk
+To Clock       : clk
+Failed Paths   : 0
+
+Type           : Total number of failed paths
+Slack          : 
+Required Time  : 
+Actual Time    : 
+From           : 
+To             : 
+From Clock     : 
+To Clock       : 
+Failed Paths   : 0
+
+--------------------------------------------------------------------------------------
+

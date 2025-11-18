@@ -1,0 +1,204 @@
+--A1L11 is add~53
+--operation mode is normal
+
+A1L11_carry_eqn = A1L01;
+A1L11 = B[2] $ A[2] $ A1L11_carry_eqn;
+
+
+--A1L5 is add~15
+--operation mode is normal
+
+A1L5 = A[2] $ (A[1] & A[0]);
+
+
+--A1L22 is F~33
+--operation mode is normal
+
+A1L22 = S[0] & S[1] # !S[0] & S[1] & A1L5 # !S[1] & A1L31;
+
+
+--A1L6 is add~30
+--operation mode is normal
+
+A1L6 = A[2] $ (A[1] # A[0]);
+
+
+--A1L32 is F~34
+--operation mode is normal
+
+A1L32 = S[0] & A1L22 & !A1L6 # !A1L22 & A1L11 # !S[0] & A1L22;
+
+
+--A1L92 is F~1433
+--operation mode is normal
+
+A1L92 = A[2] & S[1] & !B[2] # !S[1] & S[0] # B[2] # !A[2] & S[0] & S[1] # B[2] # !S[0] & S[1] & B[2];
+
+
+--A1L03 is F~1434
+--operation mode is normal
+
+A1L03 = M & A1L32 # !M & A1L92;
+
+
+--A1L9 is add~52
+--operation mode is arithmetic
+
+A1L9_carry_eqn = A1L8;
+A1L9 = B[1] $ A[1] $ !A1L9_carry_eqn;
+
+--A1L01 is add~52COUT
+--operation mode is arithmetic
+
+A1L01 = CARRY(B[1] & !A1L8 # !A[1] # !B[1] & !A[1] & !A1L8);
+
+
+--A1L52 is F~1404
+--operation mode is normal
+
+A1L52 = S[1] & A[0] # !S[1] & A1L42;
+
+
+--A1L62 is F~1405
+--operation mode is normal
+
+A1L62 = S[0] & !A[1] & S[1] # !S[0] & A[1] $ (B[1] & !S[1]);
+
+
+--A1L72 is F~1406
+--operation mode is normal
+
+A1L72 = A[1] & B[1] & !S[1] # !B[1] & S[0] # S[1] # !A[1] & B[1] & S[0] # S[1] # !B[1] & S[0] & S[1];
+
+
+--A1L82 is F~1407
+--operation mode is normal
+
+A1L82 = M & A1L52 $ A1L62 # !M & A1L72;
+
+
+--A1L7 is add~51
+--operation mode is arithmetic
+
+A1L7 = B[0] $ A[0];
+
+--A1L8 is add~51COUT
+--operation mode is arithmetic
+
+A1L8 = CARRY(A[0] # !B[0]);
+
+
+--A1L23 is Mux~772
+--operation mode is normal
+
+A1L23 = S[0] & A1L7 # !S[0] & A[0] $ B[0];
+
+
+--A1L33 is Mux~773
+--operation mode is normal
+
+A1L33 = S[1] & !A[0] # !S[1] & A1L23;
+
+
+--A1L43 is Mux~774
+--operation mode is normal
+
+A1L43 = A[0] & S[1] & !B[0] # !S[1] & S[0] # B[0] # !A[0] & S[0] & S[1] # B[0] # !S[0] & S[1] & B[0];
+
+
+--A1L53 is Mux~775
+--operation mode is normal
+
+A1L53 = M & A1L33 # !M & A1L43;
+
+
+--A1L42 is F~1403
+--operation mode is normal
+
+A1L42 = S[0] & A1L9 # !S[0] & A[0] & B[0];
+
+
+--A1L21 is add~384
+--operation mode is normal
+
+A1L21 = B[1] & A[1] # B[0] & A[0] # !B[1] & B[0] & A[0] & A[1];
+
+
+--A1L31 is add~385
+--operation mode is normal
+
+A1L31 = A1L21 $ B[2] $ A[2];
+
+
+--S[0] is S[0]
+--operation mode is input
+
+S[0] = INPUT();
+
+
+--A[2] is A[2]
+--operation mode is input
+
+A[2] = INPUT();
+
+
+--A[1] is A[1]
+--operation mode is input
+
+A[1] = INPUT();
+
+
+--A[0] is A[0]
+--operation mode is input
+
+A[0] = INPUT();
+
+
+--S[1] is S[1]
+--operation mode is input
+
+S[1] = INPUT();
+
+
+--B[1] is B[1]
+--operation mode is input
+
+B[1] = INPUT();
+
+
+--B[0] is B[0]
+--operation mode is input
+
+B[0] = INPUT();
+
+
+--B[2] is B[2]
+--operation mode is input
+
+B[2] = INPUT();
+
+
+--M is M
+--operation mode is input
+
+M = INPUT();
+
+
+--F[2] is F[2]
+--operation mode is output
+
+F[2] = OUTPUT(A1L03);
+
+
+--F[1] is F[1]
+--operation mode is output
+
+F[1] = OUTPUT(A1L82);
+
+
+--F[0] is F[0]
+--operation mode is output
+
+F[0] = OUTPUT(A1L53);
+
+

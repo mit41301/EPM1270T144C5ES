@@ -1,0 +1,47 @@
+|seven_seg
+sw[1] => d[4].DATAIN
+sw[2] => d[3].DATAIN
+sw[3] => d[2].DATAIN
+sw[4] => d[1].DATAIN
+dip[8] => Mux~0.IN19
+dip[8] => Mux~1.IN19
+dip[8] => Mux~2.IN19
+dip[8] => Mux~3.IN19
+dip[8] => Mux~4.IN19
+dip[8] => Mux~5.IN19
+dip[8] => Mux~6.IN19
+dip[7] => Mux~0.IN18
+dip[7] => Mux~1.IN18
+dip[7] => Mux~2.IN18
+dip[7] => Mux~3.IN18
+dip[7] => Mux~4.IN18
+dip[7] => Mux~5.IN18
+dip[7] => Mux~6.IN18
+dip[6] => Mux~0.IN17
+dip[6] => Mux~1.IN17
+dip[6] => Mux~2.IN17
+dip[6] => Mux~3.IN17
+dip[6] => Mux~4.IN17
+dip[6] => Mux~5.IN17
+dip[6] => Mux~6.IN17
+dip[5] => Mux~0.IN16
+dip[5] => Mux~1.IN16
+dip[5] => Mux~2.IN16
+dip[5] => Mux~3.IN16
+dip[5] => Mux~4.IN16
+dip[5] => Mux~5.IN16
+dip[5] => Mux~6.IN16
+seg_out[0] <= Mux~6.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[1] <= Mux~5.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[2] <= Mux~4.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[3] <= Mux~3.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[4] <= Mux~2.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[5] <= Mux~1.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[6] <= Mux~0.DB_MAX_OUTPUT_PORT_TYPE
+seg_out[7] <= <GND>
+d[4] <= sw[1].DB_MAX_OUTPUT_PORT_TYPE
+d[3] <= sw[2].DB_MAX_OUTPUT_PORT_TYPE
+d[2] <= sw[3].DB_MAX_OUTPUT_PORT_TYPE
+d[1] <= sw[4].DB_MAX_OUTPUT_PORT_TYPE
+
+

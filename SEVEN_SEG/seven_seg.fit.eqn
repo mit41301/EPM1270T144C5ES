@@ -1,0 +1,162 @@
+--A1L11 is Mux~7 at LC_X1_Y7_N6
+--operation mode is normal
+
+A1L11 = dip[8] & dip[5] # dip[7] $ dip[6] # !dip[8] & dip[7] # dip[5] $ dip[6];
+
+
+--A1L21 is Mux~9 at LC_X1_Y7_N9
+--operation mode is normal
+
+A1L21 = dip[7] & !dip[5] & dip[8] # !dip[6] # !dip[7] & dip[8] & dip[5] $ !dip[6];
+
+
+--A1L31 is Mux~11 at LC_X1_Y7_N5
+--operation mode is normal
+
+A1L31 = dip[7] & !dip[5] & dip[8] # !dip[7] & dip[6] & !dip[5] # !dip[6] & dip[8];
+
+
+--A1L41 is Mux~13 at LC_X1_Y7_N4
+--operation mode is normal
+
+A1L41 = dip[7] & dip[6] & dip[8] # !dip[6] & dip[5] & !dip[8] # !dip[7] & !dip[5] & dip[6] $ dip[8];
+
+
+--A1L51 is Mux~15 at LC_X1_Y7_N2
+--operation mode is normal
+
+A1L51 = dip[5] & dip[6] & dip[7] # !dip[8] # !dip[5] & dip[7] & !dip[6] & !dip[8];
+
+
+--A1L61 is Mux~17 at LC_X1_Y7_N8
+--operation mode is normal
+
+A1L61 = dip[5] & dip[8] & dip[7] # !dip[8] & dip[6] # !dip[5] & dip[6] & dip[7] $ dip[8];
+
+
+--A1L71 is Mux~19 at LC_X1_Y7_N3
+--operation mode is normal
+
+A1L71 = dip[5] & dip[8] & dip[7] $ dip[6] # !dip[5] & !dip[7] & dip[6] $ dip[8];
+
+
+--dip[8] is dip[8] at PIN_11
+--operation mode is input
+
+dip[8] = INPUT();
+
+
+--dip[7] is dip[7] at PIN_12
+--operation mode is input
+
+dip[7] = INPUT();
+
+
+--dip[6] is dip[6] at PIN_13
+--operation mode is input
+
+dip[6] = INPUT();
+
+
+--dip[5] is dip[5] at PIN_14
+--operation mode is input
+
+dip[5] = INPUT();
+
+
+--sw[4] is sw[4] at PIN_28
+--operation mode is input
+
+sw[4] = INPUT();
+
+
+--sw[3] is sw[3] at PIN_27
+--operation mode is input
+
+sw[3] = INPUT();
+
+
+--sw[2] is sw[2] at PIN_24
+--operation mode is input
+
+sw[2] = INPUT();
+
+
+--sw[1] is sw[1] at PIN_23
+--operation mode is input
+
+sw[1] = INPUT();
+
+
+--seg_out[7] is seg_out[7] at PIN_44
+--operation mode is output
+
+seg_out[7] = OUTPUT(GND);
+
+
+--seg_out[6] is seg_out[6] at PIN_43
+--operation mode is output
+
+seg_out[6] = OUTPUT(!A1L11);
+
+
+--seg_out[5] is seg_out[5] at PIN_42
+--operation mode is output
+
+seg_out[5] = OUTPUT(A1L21);
+
+
+--seg_out[4] is seg_out[4] at PIN_41
+--operation mode is output
+
+seg_out[4] = OUTPUT(A1L31);
+
+
+--seg_out[3] is seg_out[3] at PIN_40
+--operation mode is output
+
+seg_out[3] = OUTPUT(A1L41);
+
+
+--seg_out[2] is seg_out[2] at PIN_39
+--operation mode is output
+
+seg_out[2] = OUTPUT(A1L51);
+
+
+--seg_out[1] is seg_out[1] at PIN_38
+--operation mode is output
+
+seg_out[1] = OUTPUT(A1L61);
+
+
+--seg_out[0] is seg_out[0] at PIN_37
+--operation mode is output
+
+seg_out[0] = OUTPUT(A1L71);
+
+
+--d[1] is d[1] at PIN_29
+--operation mode is output
+
+d[1] = OUTPUT(!sw[4]);
+
+
+--d[2] is d[2] at PIN_30
+--operation mode is output
+
+d[2] = OUTPUT(!sw[3]);
+
+
+--d[3] is d[3] at PIN_31
+--operation mode is output
+
+d[3] = OUTPUT(!sw[2]);
+
+
+--d[4] is d[4] at PIN_32
+--operation mode is output
+
+d[4] = OUTPUT(!sw[1]);
+
+
